@@ -145,16 +145,89 @@ if __name__ == "__main__":
                     print("Request for readings received from HUB")
                     msg = {"result":device.get_readings()}
                     if utils.send_encrypted_message(hub,msg,hub_pub_key):
-                        print("Readings sent to hub")
+                        print("Responded to HUB")
                     else:
-                        print("Sending readings to hub failed!")
+                        print("Responding to hub failed!")
 
-                elif action == 'activate':
-                    pass
-                elif action == 'deactivate':
-                    pass
-                elif action == 'on':
-                    pass
+                elif action == 'set_thres':
+                    print("Request to set threshold received from HUB")
+                    device.set_threshold(request_data['value'])
+                    msg = {"result":"success"}
+                    if utils.send_encrypted_message(hub,msg,hub_pub_key):
+                        print("Responded to HUB")
+                    else:
+                        print("Responding to hub failed!")
+
+                elif action == 'set_activate':
+                    print("Request to set activate received from HUB")
+
+                    if device.status == "active":
+                        res = "already active"
+                    else:
+                        device.activate()
+                        res = "success"
+
+                    msg = {"result": res}
+                    if utils.send_encrypted_message(hub, msg, hub_pub_key):
+                        print("Responded to HUB")
+                    else:
+                        print("Responding to hub failed!")
+
+                elif action == 'set_deactivate':
+                    print("Request to set deactivate received from HUB")
+
+                    if device.status == "deactive":
+                        res = "already deactive"
+                    else:
+                        device.deactivate()
+                        res = "success"
+
+                    msg = {"result": res}
+                    if utils.send_encrypted_message(hub, msg, hub_pub_key):
+                        print("Responded to HUB")
+                    else:
+                        print("Responding to hub failed!")
+
+                elif action == 'set_on':
+                    print("Request to turn on received from HUB")
+                    res = ""
+
+                    if isinstance(device,SmartLight):
+                        device.deactivate()
+                        device.switch_on()
+                        res = "Manual override (threshold deactivated); lighted switched on"
+
+                    elif isinstance(device,MotionSensor):
+
+                        if device.switch == "on":
+                            res = "already on"
+                        else:
+                            device.switch_on()
+                            res = "success - motion sensor engaged"
+
+                    elif isinstance(device, SmartLock):
+
+                        if device.switch == "on":
+                            res = "already locked"
+                        else:
+                            device.lock()
+                            res = "success - lock engaged"
+
+
+                    elif isinstance(device, Thermostat):
+                        if device.switch == "on":
+                            res = "already on"
+                        else:
+                            device.switch_on()
+                            res = "success - thermostat engaged"
+
+
+                    msg = {"result": res}
+                    if utils.send_encrypted_message(hub, msg, hub_pub_key):
+                        print("Responded to HUB")
+                    else:
+                        print("Responding to hub failed!")
+
                 elif action == 'off':
                     pass
 

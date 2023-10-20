@@ -82,6 +82,46 @@ def list_all_devices(connected=False):
     return "\n".join(devlist)
 
 
+def list_devices_get_response(msg):
+    devlistkeys = [k for k in device_list.keys() if device_list[k]["socket"] is not None]
+    devlist = [device_list[k] for k in devlistkeys]
+    if not devlist:
+        return None,"No connected devices"
+
+    print("\nConnected Devices (please select one):")
+    print(list_all_devices(connected=True))
+
+    devopt = input("\nSelected device: ")
+
+    try:
+        devopt = int(devopt.lower().strip())
+    except ValueError:
+        return None,"Invalid input"
+
+    if devopt < 0 or devopt >= len(devlist):
+        return None,"Invalid input. Please enter a value from the menu."
+
+
+    if not utils.send_encrypted_message(devlist[devopt]["socket"], msg, dev_public_key):
+        return None,"Failed to send message to device"
+
+    try:
+        # Find out if connection was successful
+        request = devlist[devopt]["socket"].recv(1024)
+
+        if not request:
+            device_list[devlistkeys[devopt]]["socket"] = None
+            return None,"Unable to connect to the device. Aborting..."
+
+    except:
+        return None,"Unable to connect to the device. Aborting..."
+
+    request_data = utils.decrypt_message(request, hub_private_key)
+
+    if not ('result' in request_data):
+        return None,"Message not understood..."
+
+    return request_data['result'], "Success"
 
 def menu_interface():
     menu = {}
@@ -127,65 +167,52 @@ def menu_interface():
 
             elif choicekey == 'devread':
 
-                devlistkeys = [k for k in device_list.keys() if device_list[k]["socket"] is not None]
-                devlist = [device_list[k] for k in devlistkeys]
-                if not devlist:
-                    print("No connected devices")
-                    continue
-
-                print("Connected Devices:")
-                print(list_all_devices(connected=True))
-
-                devopt = input("Select device: ")
-
-                try:
-                    devopt = int(devopt.lower().strip())
-                except ValueError:
-                    print("Invalid input.")
-                    continue
-
-
-                if devopt < 0 or devopt >= len(devlist):
-                    print(f"Invalid input. Please enter a value from the menu.")
-                    continue
-
-                msg = {"action":"get_readings"}
-                if not utils.send_encrypted_message(devlist[devopt]["socket"],msg,dev_public_key):
-                   print("Failed to send message to device")
-                   continue
-
-                try:
-                    # Find out if connection was successful
-                    request = devlist[devopt]["socket"].recv(1024)
-
-                    if not request:
-                        print("Unable to connect to the device. Aborting...")
-                        device_list[devlistkeys[devopt]]["socket"] = None
-                        continue
-
-                except:
-                    print("Unable to connect to the device. Aborting...")
-                    continue
-
-                request_data = utils.decrypt_message(request, hub_private_key)
-
-                if not ('result' in request_data):
-                    print("Unable to connect to the hub. Aborting...")
+                msg = {"action": "get_readings"}
+                result,errmsg = list_devices_get_response(msg)
+                if not result:
+                    print(errmsg)
                     continue
 
                 print("Device readings:")
-                print(request_data['result'])
-
-
+                print(result)
 
             elif choicekey == 'thres':
-                print("Set threshold")
+
+                thres = input("Specify threshold: ")
+
+                try:
+                    thres = int(thres.lower().strip())
+                except ValueError:
+                    print("Invalid input")
+                    continue
+
+                msg = {"action": "set_thres", "value":thres}
+                result, errmsg = list_devices_get_response(msg)
+                if not result:
+                    print(errmsg)
+                    continue
+
+                print("Result:" + result)
+
 
             elif choicekey == 'act':
-                print("Activate")
+                msg = {"action": "set_activate"}
+                result,errmsg = list_devices_get_response(msg)
+                if not result:
+                    print(errmsg)
+                    continue
+
+                print("Result:" + result)
+
 
             elif choicekey == 'deact':
-                print("Deactivate")
+                msg = {"action": "set_deactivate"}
+                result,errmsg = list_devices_get_response(msg)
+                if not result:
+                    print(errmsg)
+                    continue
+
+                print("Result:" + result)
 
             elif choicekey == 'on':
                 print("Switch on")
