@@ -206,20 +206,24 @@ if __name__ == "__main__":
                             res = "success - motion sensor engaged"
 
                     elif isinstance(device, SmartLock):
-
-                        if device.switch == "on":
-                            res = "already locked"
+                        if device.status == "deactive":
+                            res = "failure - lock is deactive"
                         else:
-                            device.lock()
-                            res = "success - lock engaged"
-
+                            if device.switch == "on":
+                                res = "already locked"
+                            else:
+                                device.lock()
+                                res = "success - lock engaged"
 
                     elif isinstance(device, Thermostat):
-                        if device.switch == "on":
-                            res = "already on"
+                        if device.status == "deactive":
+                            res = "failure - lock is deactive"
                         else:
-                            device.switch_on()
-                            res = "success - thermostat engaged"
+                            if device.switch == "on":
+                                res = "already on"
+                            else:
+                                device.switch_on()
+                                res = "success - thermostat engaged"
 
 
                     msg = {"result": res}
@@ -228,8 +232,48 @@ if __name__ == "__main__":
                     else:
                         print("Responding to hub failed!")
 
-                elif action == 'off':
-                    pass
+                elif action == 'set_off':
+                    print("Request to turn off received from HUB")
+                    res = ""
+
+                    if isinstance(device,SmartLight):
+                        device.deactivate()
+                        device.switch_off()
+                        res = "Manual override (threshold deactivated); lighted switched off"
+
+                    elif isinstance(device,MotionSensor):
+
+                        if device.switch == "off":
+                            res = "already off"
+                        else:
+                            device.switch_off()
+                            res = "success - motion sensor disengaged"
+
+                    elif isinstance(device, SmartLock):
+
+                        if device.status == "deactive":
+                            res = "failure - lock is deactive"
+                        else:
+                            if device.switch == "off":
+                                res = "already unlocked"
+                            else:
+                                device.unlock()
+                                res = "success - lock disengaged"
+
+
+                    elif isinstance(device, Thermostat):
+                        if device.switch == "off":
+                            res = "already off"
+                        else:
+                            device.switch_off()
+                            res = "success - thermostat disengaged"
+
+
+                    msg = {"result": res}
+                    if utils.send_encrypted_message(hub, msg, hub_pub_key):
+                        print("Responded to HUB")
+                    else:
+                        print("Responding to hub failed!")
 
             else:
                 print("Message not understood")

@@ -183,7 +183,7 @@ class Thermostat(Device):
             return
 
         if simval is None:
-            self.set_value(self.get_value() + round(float(random.randint(-1, 1))/10),1)
+            self.set_value(self.get_value() + round(float(random.randint(-1, 1))/10,1))
         else:
             self.set_value(simval)
 
@@ -216,4 +216,5 @@ class Thermostat(Device):
 #     print(s3.threshold)
 #     s3.set_threshold(3)
 #     print(s3.threshold)
+#     s3.sense()
 

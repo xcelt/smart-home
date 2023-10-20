@@ -72,9 +72,11 @@ def handle_device(device_socket, device_address):
 def list_all_devices(connected=False):
 
     if connected:
-        devlist = [f"{ind}: {k}" for ind, k in enumerate(device_list.keys()) if device_list[k]["socket"] is not None]
+        devlistkeys = [k for k in device_list.keys() if device_list[k]["socket"] is not None]
     else:
-        devlist = [f"{ind}: {k}" for ind, k in enumerate(device_list.keys())]
+        devlistkeys = [k for k in device_list.keys()]
+
+    devlist = [f"{ind}: {k}" for ind, k in enumerate(devlistkeys)]
 
     if not devlist:
         return "--None--"
@@ -83,13 +85,20 @@ def list_all_devices(connected=False):
 
 
 def list_devices_get_response(msg):
-    devlistkeys = [k for k in device_list.keys() if device_list[k]["socket"] is not None]
-    devlist = [device_list[k] for k in devlistkeys]
-    if not devlist:
+
+    devlistkeysconn = [k for k in device_list.keys() if device_list[k]["socket"] is not None]
+    # devlistkeys = [k for k in device_list.keys()]
+
+    # devlistkeys = [k for k in device_list.keys() if device_list[k]["socket"] is not None]
+    # devlist = [device_list[k] for k in devlistkeys]
+    if not devlistkeysconn:
         return None,"No connected devices"
 
+    devlistconn = [device_list[k] for k in devlistkeysconn]
+
     print("\nConnected Devices (please select one):")
-    print(list_all_devices(connected=True))
+    print("\n".join([f"{ind}: {k}" for ind, k in enumerate(devlistkeysconn)]))
+
 
     devopt = input("\nSelected device: ")
 
@@ -98,19 +107,19 @@ def list_devices_get_response(msg):
     except ValueError:
         return None,"Invalid input"
 
-    if devopt < 0 or devopt >= len(devlist):
+    if devopt < 0 or devopt >= len(devlistconn):
         return None,"Invalid input. Please enter a value from the menu."
 
 
-    if not utils.send_encrypted_message(devlist[devopt]["socket"], msg, dev_public_key):
+    if not utils.send_encrypted_message(devlistconn[devopt]["socket"], msg, dev_public_key):
         return None,"Failed to send message to device"
 
     try:
         # Find out if connection was successful
-        request = devlist[devopt]["socket"].recv(1024)
+        request = devlistconn[devopt]["socket"].recv(1024)
 
         if not request:
-            device_list[devlistkeys[devopt]]["socket"] = None
+            device_list[devlistkeysconn[devopt]]["socket"] = None
             return None,"Unable to connect to the device. Aborting..."
 
     except:
@@ -215,10 +224,22 @@ def menu_interface():
                 print("Result:" + result)
 
             elif choicekey == 'on':
-                print("Switch on")
+                msg = {"action": "set_on"}
+                result,errmsg = list_devices_get_response(msg)
+                if not result:
+                    print(errmsg)
+                    continue
+
+                print("Result:" + result)
 
             elif choicekey == 'off':
-                print("Switch off")
+                msg = {"action": "set_off"}
+                result,errmsg = list_devices_get_response(msg)
+                if not result:
+                    print(errmsg)
+                    continue
+
+                print("Result:" + result)
 
             elif choicekey == 'quit':
                 print("Quiting...")
