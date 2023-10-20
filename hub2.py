@@ -1,6 +1,7 @@
 import socket
 import threading
 import utils
+import json
 
 def print_out(d):
     pass
@@ -182,23 +183,28 @@ def menu_interface():
                 print("Connected devices:")
                 print(list_all_devices(connected=True))
 
-            elif choicekey == 'devread':
+            # elif choicekey == 'devread':
+            #
+            #     msg = {"action": "get_readings"}
+            #     devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+            #     if not devlistconn:
+            #         print(resmsg)
+            #         continue
+            #
+            #     result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
+            #     if not result:
+            #         print(errmsg)
+            #         continue
+            #
+            #     print("Device readings:")
+            #     print(result)
 
-                msg = {"action": "get_readings"}
+            elif choicekey == 'thres':
+
                 devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
                 if not devlistconn:
                     print(resmsg)
                     continue
-
-                result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
-                if not result:
-                    print(errmsg)
-                    continue
-
-                print("Device readings:")
-                print(result)
-
-            elif choicekey == 'thres':
 
                 thres = input("Specify threshold: ")
 
@@ -209,10 +215,6 @@ def menu_interface():
                     continue
 
                 msg = {"action": "set_thres", "value":thres}
-                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
-                if not devlistconn:
-                    print(resmsg)
-                    continue
 
                 result, errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
                 if not result:
@@ -222,8 +224,17 @@ def menu_interface():
                 print("Result:" + result)
 
 
-            elif choicekey == 'act':
-                msg = {"action": "set_activate"}
+            elif choicekey in ['devread','act','deact','on','off', 'disc']:
+
+                msgs = {'devread':{"action": "get_readings"},
+                        'act':{"action": "set_activate"},
+                        'deact':{"action": "set_deactivate"},
+                        'on': {"action": "set_on"},
+                        'off': {"action": "set_off"},
+                        'disc':{"action": "set_disconnect"}
+                        }
+
+                msg = msgs[choicekey]
                 devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection(displayall=True)
                 if not devlistconn:
                     print(resmsg)
@@ -235,6 +246,7 @@ def menu_interface():
                     if not result:
                         print(errmsg)
                         continue
+                    print("Result: " + json.dumps(result))
 
                 else:
 
@@ -243,67 +255,67 @@ def menu_interface():
                         if not result:
                             print(errmsg)
                             continue
-                        print(f"{devlistkeysconn[ind]} result:" + result)
+                        print(f"{devlistkeysconn[ind]} result: " + json.dumps(result))
 
 
 
 
-            elif choicekey == 'deact':
-                msg = {"action": "set_deactivate"}
-
-                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
-                if not devlistconn:
-                    print(resmsg)
-                    continue
-
-                result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
-                if not result:
-                    print(errmsg)
-                    continue
-
-                print("Result:" + result)
-
-            elif choicekey == 'on':
-                msg = {"action": "set_on"}
-                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
-                if not devlistconn:
-                    print(resmsg)
-                    continue
-
-                result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
-                if not result:
-                    print(errmsg)
-                    continue
-
-                print("Result:" + result)
-
-            elif choicekey == 'off':
-                msg = {"action": "set_off"}
-                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
-                if not devlistconn:
-                    print(resmsg)
-                    continue
-
-                result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
-                if not result:
-                    print(errmsg)
-                    continue
-
-                print("Result:" + result)
-
-            elif choicekey == 'disc':
-                msg = {"action": "set_disconnect"}
-                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
-                if not devlistconn:
-                    print(resmsg)
-                    continue
-
-                result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
-                if not result:
-                    print(errmsg)
-                    continue
-
-                print("Result:" + result)
+            # elif choicekey == 'deact':
+            #     msg =
+            #
+            #     devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+            #     if not devlistconn:
+            #         print(resmsg)
+            #         continue
+            #
+            #     result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
+            #     if not result:
+            #         print(errmsg)
+            #         continue
+            #
+            #     print("Result:" + result)
+            #
+            # elif choicekey == 'on':
+            #     msg =
+            #     devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+            #     if not devlistconn:
+            #         print(resmsg)
+            #         continue
+            #
+            #     result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
+            #     if not result:
+            #         print(errmsg)
+            #         continue
+            #
+            #     print("Result:" + result)
+            #
+            # elif choicekey == 'off':
+            #
+            #     devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+            #     if not devlistconn:
+            #         print(resmsg)
+            #         continue
+            #
+            #     result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
+            #     if not result:
+            #         print(errmsg)
+            #         continue
+            #
+            #     print("Result:" + result)
+            #
+            # elif choicekey == 'disc':
+            #     msg =
+            #     devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+            #     if not devlistconn:
+            #         print(resmsg)
+            #         continue
+            #
+            #     result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
+            #     if not result:
+            #         print(errmsg)
+            #         continue
+            #
+            #     print("Result:" + result)
 
             elif choicekey == 'quit':
                 print("Quiting...")
