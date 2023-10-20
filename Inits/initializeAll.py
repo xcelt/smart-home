@@ -1,5 +1,3 @@
-'''Helper module to generate fernet and RSA keys for devices and hub'''
-
 import json
 import socket
 from cryptography.hazmat.backends import default_backend
@@ -9,6 +7,9 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import hashes  # Add this import
 
 from cryptography.fernet import Fernet
+
+import utils
+
 
 def generate_and_save_fernet_key(keyfile):
     try:
@@ -57,21 +58,16 @@ generate_and_save_keys("../Secrets/dev_pub.key","../Secrets/dev_prv.key")
 print("Generating hub and device fernet encryption keys")
 generate_and_save_fernet_key("../Secrets/hub_enc.key")
 generate_and_save_fernet_key("../Secrets/dev_enc.key")
-# # Generate an RSA public key (for example purposes)
-# private_key = rsa.generate_private_key(
-#     public_exponent=65537,
-#     key_size=2048,
-#     backend=default_backend()
-# )
-#
-# # Extract the public key in PEM format
-# pub_key = private_key.public_key().public_bytes(
-#     encoding=serialization.Encoding.PEM,
-#     format=serialization.PublicFormat.SubjectPublicKeyInfo
-# )
-#
-# with open("../Secrets/pub.key", "wb") as encfile:
-#     encfile.write(pub_key)
-#
-# with open("../Secrets/prv.key", "wb") as encfile:
-#     encfile.write(private_key)
+
+
+server_user = "user1"
+server_pass = "user1password"
+
+credentials = {'user':server_user, 'pass':server_pass}
+
+# public_key, private_key = utils.load_keys("../Secrets/pub.key","../Secrets/prv.key")
+fer_key = utils.load_fernet_key("../Secrets/dev_enc.key")
+
+
+if utils.encrypt_and_save_fernet(credentials, fer_key, "../Secrets/creds.bin"):
+    print("Credentials created and saved to 'Secrets/creds.bin'")

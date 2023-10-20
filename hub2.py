@@ -301,6 +301,14 @@ if __name__ == "__main__":
     dev_public_key, _ = utils.load_keys("./Secrets/dev_pub.key", None)
     fer_key = utils.load_fernet_key("./Secrets/dev_enc.key")
 
+    try:
+        assert hub_private_key is not None, "No HUB private key found. Please generate it by running './Inits/initializeAll.py'"
+        assert dev_public_key is not None, "No device public key found. Please generate it by running './Inits/initializeAll.py'"
+        assert fer_key is not None, "No encryption key found. Please generate it by running './Inits/initializeAll.py'"
+    except Exception as e:
+        print(f"\n\nERROR: key(s) not found: {e}")
+        print("Exiting...")
+        exit(1)
 
     device_list = load_device_list()
 

@@ -31,7 +31,7 @@ def load_and_decrypt_fernet(fer_key, filename):
             decrypted_data = cipher_suite.decrypt(encrypted_data)
             return json.loads(decrypted_data.decode('utf-8'))
 
-        except OSError:  # file not found
+        except:  # file not found
             return None
 
 def encrypt_and_save_fernet(data, enc_key, filename):
@@ -80,7 +80,7 @@ def load_keys(public_key_file=None, private_key_file=None):
 
         return public_key, private_key
     except Exception as e:
-        print(f"Error loading keys: {e}")
+        # print(f"Error loading keys: {e}")
         return None, None
 
 

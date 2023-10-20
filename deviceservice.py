@@ -59,7 +59,7 @@ if __name__ == "__main__":
     print("Rather, the credentials have been created and stored in encrypted format on disk using the './Inits/createecryptedservercredentials.py' script")
     #Load the Fernet key to decrypt the credentials file
     fer_key = utils.load_fernet_key("./Secrets/dev_enc.key")
-    creds = utils.load_and_decrypt_fernet(fer_key,"./Secrets/creds.bin")
+
 
     print("\n Also, usually the protocol would require exchange of public keys for secure communications.")
     print("In this demo, I am assuming this has been done and the public keys have been generated and exchanged.")
@@ -68,6 +68,17 @@ if __name__ == "__main__":
 
     hub_pub_key = utils.load_public_key("./Secrets/hub_pub.key")
     _, dev_private_key = utils.load_keys(None, "./Secrets/dev_prv.key")
+
+    try:
+        assert hub_pub_key is not None, "No HUB public key found. Please generate it by running './Inits/initializeAll.py'"
+        assert dev_private_key is not None, "No device private key found. Please generate it by running './Inits/initializeAll.py'"
+        assert fer_key is not None, "No encryption key found. Please generate it by running './Inits/initializeAll.py'"
+    except Exception as e:
+        print(f"\n\nERROR: key(s) not found: {e}")
+        print("Exiting...")
+        exit(1)
+
+    creds = utils.load_and_decrypt_fernet(fer_key,"./Secrets/creds.bin")
 
     # vals = [-10,-5, -1, 1, 4, 5, 6, 7, 6, 5, 4, 5, 6, 7, 9, 10, 11, 23, 6, 5, 4, 5]
     #
