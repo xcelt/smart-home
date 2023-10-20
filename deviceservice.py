@@ -41,7 +41,13 @@ if __name__ == "__main__":
     print("Here's the pre-defined list of devices to link into the home:")
     for ind,dev in enumerate(DEVICE_LIST):
         print(f"{ind}: {dev}")
-    devopt = int(input("Which device should this program instance simulate?: ").lower().strip())
+    devopt = input("Which device should this program instance simulate?: ")
+
+    try:
+        devopt = int(devopt.lower().strip())
+    except ValueError:
+        print("Invalid device option. Please restart the program.")
+        exit(1)
 
     if devopt not in range(len(DEVICE_LIST)):
         print("Invalid device option. Please restart the program.")

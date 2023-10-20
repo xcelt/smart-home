@@ -77,13 +77,10 @@ def list_all_devices(connected=False):
 
     return "\n".join(devlist)
 
-def list_devices_get_selection():
+def list_devices_get_selection(displayall=False):
 
     devlistkeysconn = [k for k in device_list.keys() if device_list[k]["socket"] is not None]
-    # devlistkeys = [k for k in device_list.keys()]
 
-    # devlistkeys = [k for k in device_list.keys() if device_list[k]["socket"] is not None]
-    # devlist = [device_list[k] for k in devlistkeys]
     if not devlistkeysconn:
         return None, None, None,"No connected devices"
 
@@ -91,6 +88,8 @@ def list_devices_get_selection():
 
     print("\nConnected Devices (please select one):")
     print("\n".join([f"{ind}: {k}" for ind, k in enumerate(devlistkeysconn)]))
+    if displayall:
+        print(f"{len(devlistkeysconn)}: ALL")
 
 
     devopt = input("\nSelected device: ")
@@ -100,7 +99,13 @@ def list_devices_get_selection():
     except ValueError:
         return None, None, None,"Invalid input"
 
-    if devopt < 0 or devopt >= len(devlistconn):
+    if displayall:
+        cond = devopt > len(devlistconn)
+    else:
+        cond = devopt >= len(devlistconn)
+
+    #Used to be devopt >= len(devlistconn); adding an item for "ALL"
+    if devopt < 0 or cond:
         return None, None, None,"Invalid input. Please enter a value from the menu."
 
     return devopt, devlistconn, devlistkeysconn, "Success"
@@ -219,17 +224,28 @@ def menu_interface():
 
             elif choicekey == 'act':
                 msg = {"action": "set_activate"}
-                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection(displayall=True)
                 if not devlistconn:
                     print(resmsg)
                     continue
 
-                result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
-                if not result:
-                    print(errmsg)
-                    continue
+                if devopt < len(devlistconn):
 
-                print("Result:" + result)
+                    result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
+                    if not result:
+                        print(errmsg)
+                        continue
+
+                else:
+
+                    for ind in range(len(devlistconn)):
+                        result, errmsg = send_msg_get_response(msg, ind, devlistconn, devlistkeysconn)
+                        if not result:
+                            print(errmsg)
+                            continue
+                        print(f"{devlistkeysconn[ind]} result:" + result)
+
+
 
 
             elif choicekey == 'deact':
