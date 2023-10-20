@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     DEVICE_LIST = [SmartLight("Light1", threshold=50),
                   SmartLight("Light2",threshold=30),
-                  SmartLight("Light1",threshold=80),
+                  SmartLight("Light3",threshold=80),
                   MotionSensor("Motion1",threshold=5),
                   MotionSensor("Motion2",threshold=8),
                   MotionSensor("Motion3",threshold=3),
@@ -276,6 +276,19 @@ if __name__ == "__main__":
                     else:
                         print("Responding to hub failed!")
 
+                elif action == "set_disconnect":
+                    print("Request to disconnect received from HUB")
+                    running = False
+
+                    msg = {"result": "success"}
+                    if utils.send_encrypted_message(hub, msg, hub_pub_key):
+                        print("Responded to HUB. Shutting down...")
+                    else:
+                        print("Responding to hub failed! Oh oh!")
+
+                    hub.close()
+                    break
+
             else:
                 print("Message not understood")
 
@@ -285,6 +298,7 @@ if __name__ == "__main__":
 
         except:
             print("Something went wrong...")
+            running = False
             break
 
     print("HUB closed connection. Closing...")
