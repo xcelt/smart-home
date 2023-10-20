@@ -1,12 +1,6 @@
 import socket
-import json
-import random
 import threading
-import time
-import os
-from cryptography.fernet import Fernet
 import utils
-from device import *
 
 def print_out(d):
     pass
@@ -83,8 +77,7 @@ def list_all_devices(connected=False):
 
     return "\n".join(devlist)
 
-
-def list_devices_get_response(msg):
+def list_devices_get_selection():
 
     devlistkeysconn = [k for k in device_list.keys() if device_list[k]["socket"] is not None]
     # devlistkeys = [k for k in device_list.keys()]
@@ -92,7 +85,7 @@ def list_devices_get_response(msg):
     # devlistkeys = [k for k in device_list.keys() if device_list[k]["socket"] is not None]
     # devlist = [device_list[k] for k in devlistkeys]
     if not devlistkeysconn:
-        return None,"No connected devices"
+        return None, None, None,"No connected devices"
 
     devlistconn = [device_list[k] for k in devlistkeysconn]
 
@@ -105,11 +98,20 @@ def list_devices_get_response(msg):
     try:
         devopt = int(devopt.lower().strip())
     except ValueError:
-        return None,"Invalid input"
+        return None, None, None,"Invalid input"
 
     if devopt < 0 or devopt >= len(devlistconn):
-        return None,"Invalid input. Please enter a value from the menu."
+        return None, None, None,"Invalid input. Please enter a value from the menu."
 
+    return devopt, devlistconn, devlistkeysconn, "Success"
+
+def send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn):
+
+    # devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+
+    # if not devlistconn:
+    #     # print(resmsg)
+    #     return None, resmsg
 
     if not utils.send_encrypted_message(devlistconn[devopt]["socket"], msg, dev_public_key):
         return None,"Failed to send message to device"
@@ -142,6 +144,7 @@ def menu_interface():
     menu['deact'] = "Deactivate device"
     menu['on'] = "Switch on device"
     menu['off'] = "Switch off device"
+    menu['disc'] = "Disconnect device from HUB"
     menu['quit'] = "Quit"
 
     menukeys = list(menu.keys())
@@ -177,7 +180,12 @@ def menu_interface():
             elif choicekey == 'devread':
 
                 msg = {"action": "get_readings"}
-                result,errmsg = list_devices_get_response(msg)
+                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+                if not devlistconn:
+                    print(resmsg)
+                    continue
+
+                result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
                 if not result:
                     print(errmsg)
                     continue
@@ -196,7 +204,12 @@ def menu_interface():
                     continue
 
                 msg = {"action": "set_thres", "value":thres}
-                result, errmsg = list_devices_get_response(msg)
+                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+                if not devlistconn:
+                    print(resmsg)
+                    continue
+
+                result, errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
                 if not result:
                     print(errmsg)
                     continue
@@ -206,7 +219,12 @@ def menu_interface():
 
             elif choicekey == 'act':
                 msg = {"action": "set_activate"}
-                result,errmsg = list_devices_get_response(msg)
+                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+                if not devlistconn:
+                    print(resmsg)
+                    continue
+
+                result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
                 if not result:
                     print(errmsg)
                     continue
@@ -216,7 +234,13 @@ def menu_interface():
 
             elif choicekey == 'deact':
                 msg = {"action": "set_deactivate"}
-                result,errmsg = list_devices_get_response(msg)
+
+                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+                if not devlistconn:
+                    print(resmsg)
+                    continue
+
+                result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
                 if not result:
                     print(errmsg)
                     continue
@@ -225,7 +249,12 @@ def menu_interface():
 
             elif choicekey == 'on':
                 msg = {"action": "set_on"}
-                result,errmsg = list_devices_get_response(msg)
+                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+                if not devlistconn:
+                    print(resmsg)
+                    continue
+
+                result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
                 if not result:
                     print(errmsg)
                     continue
@@ -234,7 +263,26 @@ def menu_interface():
 
             elif choicekey == 'off':
                 msg = {"action": "set_off"}
-                result,errmsg = list_devices_get_response(msg)
+                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+                if not devlistconn:
+                    print(resmsg)
+                    continue
+
+                result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
+                if not result:
+                    print(errmsg)
+                    continue
+
+                print("Result:" + result)
+
+            elif choicekey == 'disc':
+                msg = {"action": "set_disconnect"}
+                devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection()
+                if not devlistconn:
+                    print(resmsg)
+                    continue
+
+                result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
                 if not result:
                     print(errmsg)
                     continue

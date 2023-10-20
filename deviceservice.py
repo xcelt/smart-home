@@ -135,11 +135,6 @@ if __name__ == "__main__":
 
                 action = request_data['action']
 
-                # menu['thres'] = "Set device threshold"
-                # menu['act'] = "Activate device"
-                # menu['deact'] = "Deactivate device"
-                # menu['on'] = "Switch on device"
-                # menu['off'] = "Switch off device"
 
                 if action == 'get_readings':
                     print("Request for readings received from HUB")
