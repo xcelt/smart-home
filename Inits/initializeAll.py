@@ -1,10 +1,11 @@
-import json
-import socket
+"""
+Helper module that creates the HUB and device public and private keys, as well as an encryption key to be used to
+store/retrieve info from disk
+"""
+
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.primitives.asymmetric import padding
-from cryptography.hazmat.primitives import hashes  # Add this import
 
 from cryptography.fernet import Fernet
 
@@ -12,6 +13,15 @@ import utils
 
 
 def generate_and_save_fernet_key(keyfile):
+    '''
+        Generate a Fernet key and save it to a file.
+
+        Args:
+            keyfile (str): Path to the file where the Fernet key will be saved.
+
+        Returns:
+            bool: True if key generation and saving are successful, False otherwise.
+        '''
     try:
         key = Fernet.generate_key()
         print(f"Key: {key}")
@@ -23,6 +33,13 @@ def generate_and_save_fernet_key(keyfile):
         return False
 
 def generate_and_save_keys(public_key_file, private_key_file):
+    '''
+        Generate an RSA key pair, extract and save the public and private keys to separate files.
+
+        Args:
+            public_key_file (str): Path to the file where the public key will be saved.
+            private_key_file (str): Path to the file where the private key will be saved.
+        '''
     # Generate an RSA key pair
     private_key = rsa.generate_private_key(
         public_exponent=65537,
@@ -59,13 +76,12 @@ print("Generating hub and device fernet encryption keys")
 generate_and_save_fernet_key("../Secrets/hub_enc.key")
 generate_and_save_fernet_key("../Secrets/dev_enc.key")
 
-
+#These are the simulated server credentials
 server_user = "user1"
 server_pass = "user1password"
 
 credentials = {'user':server_user, 'pass':server_pass}
 
-# public_key, private_key = utils.load_keys("../Secrets/pub.key","../Secrets/prv.key")
 fer_key = utils.load_fernet_key("../Secrets/dev_enc.key")
 
 
