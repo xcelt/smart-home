@@ -3,3 +3,5 @@
 *.pyc
 Backups Junk/*
 LAST DOING.txt
+Secrets/*
+stored_devices.bin
