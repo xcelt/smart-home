@@ -376,90 +376,132 @@ def menu_interface():
 
                 #Display a list of connected devices and get the user's selection which can also be ALL
                 devopt, devlistconn, devlistkeysconn, resmsg = list_devices_get_selection(displayall=True)
+                #If nothing returned in the list (which could also mean that something went wrong in the function)
+                #Display the returned error message
                 if not devlistconn:
                     print(resmsg)
                     continue
 
+                #If the option chosen was not the ALL option i.e. a specific device
                 if devopt < len(devlistconn):
 
+                    #Use the send_msg_get_response function to send the secure message to the device and get its response
                     result,errmsg = send_msg_get_response(msg, devopt, devlistconn, devlistkeysconn)
+
+                    # If nothing returned in the list (which could also mean that something went wrong in the function)
+                    # Display the returned error message
                     if not result:
                         print(errmsg)
                         continue
+                    #Display the result from the device
                     print("Result: " + json.dumps(result))
 
+                    #If this was a disconnection operation then also set the associated device's socket to None in the
+                    #device_list, meaning disconnected
                     if choicekey == "disc":
-                        # device_list[devlistkeysconn[devopt]]["socket"].close()
                         device_list[devlistkeysconn[devopt]]["socket"] = None
 
                 else:
 
+                    #For every device in the connected devices list
                     for ind in range(len(devlistconn)):
+
+                        # Use the send_msg_get_response function to send the secure message to this device and get its response
                         result, errmsg = send_msg_get_response(msg, ind, devlistconn, devlistkeysconn)
+
+                        # If nothing returned in the list (which could also mean that something went wrong in the function)
+                        # Display the returned error message
                         if not result:
                             print(errmsg)
                             continue
+
+                        # Display this device's result
                         print(f"{devlistkeysconn[ind]} result: " + json.dumps(result))
 
+                        # If this was a disconnection operation then also set the associated device's socket to None in the
+                        # device_list, meaning disconnected
                         if choicekey == "disc":
                             # device_list[devlistkeysconn[devopt]]["socket"].close()
                             device_list[devlistkeysconn[ind]]["socket"] = None
 
 
 
-
+            #Quit option
             elif choicekey == 'quit':
                 print("Quiting...")
+
+                #Code below: get a list of all devices that are connected i.e. socket is not None
+                #Then loop through them and close() them
                 devlistkeys = [k for k in device_list.keys() if device_list[k]["socket"] is not None]
                 devlist = [device_list[k] for k in devlistkeys]
                 for dev in devlist:
                     dev['socket'].close()
+
+                #And finally, close the hub's connection as well
                 hub.close()
+                #Break out of the while loop
                 break
         except:
             print("Something went wrong.")
 
 def load_device_list():
     """
-    Helper function that returns a text list of (connected) devices in the device_list dict.
+    Helper function that loads and decrypts the device_list from disk (which would contain the device ids and
+    device types), and builds and returns a dict of ALL registered devices where each device's key is its device id,
+    and each entry is itself a dict containing fields 'socket' which is initially None, and devtype which is the
+    device type. E.g. might be something like (so you can visualize it):
+    {
+    'light1': {'socket':None, 'devtype':'SmartLight'},
+    'motionsensor2': {'socket':None, 'devtype':'MotionSensor'}
+    }
+
 
     Args:
-        connected (bool): Whether or not to return connected devices only (or otherwise ALL devices).
+        None.
 
     Returns:
-        str: Numbered list of devices in format "[num]: deviceid" OR "--None--".
+        dict: Either dict of all registered devices or {}
     """
 
+    #Load and decrypt device list from disk.
     devlist = utils.load_and_decrypt_fernet(fer_key, "./stored_devices.bin")
 
+
     if not devlist:
+        # If the list is empty i.e. either file not found or list is empty, return empty dict
         return {}
     else:
+        #Build the list as specified above
         return {k:{"socket":None, "devtype":devlist[k]["devtype"]} for k in devlist}
 
 def save_device_list():
     """
-    Helper function that returns a text list of (connected) devices in the device_list dict.
+    Helper function that builds, encrypts and saves and a dict of ALL registered devices
+    where each device's key is its device id, and associated value is the devtype which is the
+    device type. E.g. might be something like (so you can visualize it):
+    {
+    'light1': 'SmartLight',
+    'motionsensor2': 'MotionSensor'
+    }
 
     Args:
-        connected (bool): Whether or not to return connected devices only (or otherwise ALL devices).
+        Nothing.
 
     Returns:
-        str: Numbered list of devices in format "[num]: deviceid" OR "--None--".
+        Result of the save operation.
     """
 
-
+    #Build dict to save
     devlist = {k:{"devtype":device_list[k]["devtype"]} for k in device_list.keys()}
 
+    #Call the utils.encrypt_and_save_fernet function to encrypt and save the dict to disk and return its value
     return utils.encrypt_and_save_fernet(devlist, fer_key, "./stored_devices.bin")
-
-    # device_list[deviceid] = {"socket":device_socket,"devtype":request_data['devtype']}
 
 
 
 if __name__ == "__main__":
 
-
+    #Server credentials. Note that these need to match whatever encrypted credentials were generated using 'Inits/initializeAll.py' file
     server_user = "user1"
     server_pass = "user1password"
 
@@ -469,14 +511,18 @@ if __name__ == "__main__":
     print("It also allows the user to get access to the device functions\n\n")
 
     print("\n Also, usually the protocol would require exchange of public keys for secure communications.")
-    print("In this demo, I am assuming this has been done and the public keys have been generated and exchanged.")
-    print("For demo purposes, the hub and all devices public keys have been generated using the './Inits/createcryptokeys.py' script.")
+    print("In this demo, we are assuming this has been done and the public keys have been generated and exchanged.")
+    print("For demo purposes, the hub and all devices public keys have been generated using the './Inits/initializeAll.py' script.")
     print("They will be loaded from file by hub and devices and used for communications")
-    # Load the private key for decryption of communications
+    # Load the HUB private key for decryption of communications
     _, hub_private_key = utils.load_keys(None, "./Secrets/hub_prv.key")
+    # Load the device public key for encryption of communications
     dev_public_key, _ = utils.load_keys("./Secrets/dev_pub.key", None)
+    # Load the fernet key for enc/decryption of the saved devices list
     fer_key = utils.load_fernet_key("./Secrets/dev_enc.key")
 
+    #Check to make sure that the keys are not None which means either they weren't found or couldn't be loaded for
+    #whatever reason, meaning nothing can continue; no keys, no HUB
     try:
         assert hub_private_key is not None, "No HUB private key found. Please generate it by running './Inits/initializeAll.py'"
         assert dev_public_key is not None, "No device public key found. Please generate it by running './Inits/initializeAll.py'"
@@ -486,6 +532,7 @@ if __name__ == "__main__":
         print("Exiting...")
         exit(1)
 
+    #Load the device list
     device_list = load_device_list()
 
 
@@ -494,14 +541,17 @@ if __name__ == "__main__":
     menu_thread.daemon = True
     menu_thread.start()
 
+    #Use socket to set up this HUB server
     hub = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     hub.bind(('127.0.0.1', 8080))
     hub.listen(5)
 
+    #Continuously wait for client connection requests and handle them appropriately
     while True:
         try:
             client_socket, client_address = hub.accept()
 
+            #Message received; create a new thread and handover this request to the handle_device function to handle it
             device_thread = threading.Thread(target=handle_device, args=(client_socket, client_address))
             device_thread.start()
         except:
