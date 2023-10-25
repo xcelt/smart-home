@@ -1,5 +1,4 @@
 from django.db import models
-from collections import Counter # make sure in reqs.txt
 
 
 def tempDefault():
