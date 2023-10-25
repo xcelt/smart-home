@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './App.css';
+import CustomModal from "./components/Modal"
 
 // Will be removed once hooked up to backend
 const devices = [ 
@@ -12,10 +13,13 @@ const devices = [
     id: 2,
     name: "Thermostat",
     activated: true,
+    temperatureSet: true,
+    temperature: 22,
+      
   },
   {
     id: 3,
-    name: "Lights",
+    name: "Lighting",
     activated: true,
   },
   {
@@ -35,114 +39,95 @@ const devices = [
   },
 ]
 
-const rooms = [
-  {
-    id: 7,
-    name: "Living Area",
-    temperature: 14,
-    description: "Chilly",
-    activated: true,
-  },
-  {
-    id: 8,
-    name: "Bedroom 1",
-    temperature: 22,
-    description: "Warm",
-    activated: true,
-  },
-  {
-    id: 9,
-    name: "Bedroom 2",
-    temperature: 30,
-    description: "Hot",
-    activated: true,
-  },
-  {
-    id: 10,
-    name: "Bathroom",
-    temperature: 9,
-    description: "Cold",
-    activated: true,
-  },
-]
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      viewActivated:false,
+      modal: false,
+      viewActivated: true,
       deviceList: devices,
-      viewTemperature: false,
-      roomList: rooms,
+      activeItem: {
+        Name: "",
+        value: "",
+        completed: false,
+      }
     };
   }
-
-  displayActivatedDevices = status => {
+// Checks if device is activated or not
+  displayActivated = status => {
     if (status) {
-      return this.setstatus({ viewActivated: true });
+      return this.setState({ viewActivated: true })
     }
-    return this.setstatus({ viewActivated: false });
+    return this.setState({ viewActivated: false })
   }
 
-  displayTemperatureSettings = status => {
-    if (status) {
-      return this.setstatus({ viewTemperature: true });
-    }
-    return this.setstatus({ viewTemperature: false });
+// Renders activated and inactive devices under proper heading
+  renderDeviceList = () => {
+    return (
+      <div className="device-list m-3">
+        <span
+        onClick={() => this.displayActivated(true)}
+        className={this.state.viewActivated ? "active" : "" }
+
+        >
+          Activated Devices
+        </span>
+      </div>
+    )
   }
 
-  renderActivatedDevices = () => {
-    <div className="my-5 tab-list">
-      <span
-      onClick={() => this.displayActivatedDevices(true)}
-      className={this.state.viewActivated ? "active" : ""}
-      >
-        Device Settings
-      </span>
-    </div>
-  }
-
-  renderTemperatureSettings = () => {
-    <div className="my-10 tab-list">
-      <span
-      onClick={() => this.displayTemperatureSettings(true)}
-      className={this.state.viewTemperature(true)}
-      >
-        Temperature Settings
-      </span>
-    </div>
-  }
-
-// Render all activated devices
+// Rendering devices in the list { activated || inactive }
   renderDevices = () => {
     const { viewActivated } = this.state;
     const newDevices = this.state.deviceList.filter(
-      device => device.activated == viewActivated
+      device => device.activated === viewActivated
+    );   
+    
+    return newDevices.map(device => (
+      <li key={device.id} className="list-group-device d-flex justify-content-between align-devices-center">
+
+        <span className={`list-name m-3 ${this.state.viewActivated ? "activated-list" : ""}`} name={device.name}>
+          {device.name}
+        </span>
+        <span>
+          <button className={`btn btn-success m-3 ${this.state.viewActivated}`}>On</button>
+          <button className="btn btn-danger m-3">Off</button>
+        </span>
+      </li>
+    ))
+  
+  
+  };
+
+ 
+
+  render () {
+    return (
+      <main className="content p-3 mb-2 bg-info">
+        <h1 className="text-white text-uppercase text-center my-4"> Device Manager </h1>
+        <div className="row">
+          <div className="col-md-6 col-sm-10 mx-auto p-0">
+            <div className="card p=3">
+              <div>
+                <button className="btn btn-warning m-3"> Change Temperature Settings </button>
+              </div>
+              {this.renderDeviceList()}
+              <ul className=" list-group list-group-flush">
+              {this.renderDevices()}
+              </ul>
+              <span>
+                  <button className="btn btn-success m-3">Enable All Devices</button>
+                  <button className="btn btn-danger m-3">Disable All Devices</button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <footer className="m-4 mb-2 bg-info text-white text-center">Copyright 2023 &copy; All Rights Reserved</footer>
+
+      </main>
     );
   };
 
-// Render all activated temp settings
-  renderTemperature = () => {
-    const { viewTemperature } = this.state;
-    const newRoom = this.state.roomList.filter(
-      room => room.activated == viewTemperature
-    );
-  };  
-
-  render() {
-    return (
-      <main className="context">
-        <h1 className="text-black text-uppercase text-center my-4"> Smart Home Settings</h1>
-        <div className="row">
-          <div classname="col-md-6 col-sma-10 mx-auto p-0">
-            <div className="card p-3">
-              {this.renderDevices()}
-              </div>
-          </div>
-        </div>
-      </main>
-    )
-  }
 
 }
 
