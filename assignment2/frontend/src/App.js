@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import './App.css';
 import CustomModal from "./components/Modal"
+import Temperature from "./components/Temperature"
+import BootstrapSwitchButton from 'bootstrap-switch-button-react' // needs to be added to req'd deps
 
 // Will be removed once hooked up to backend
 const devices = [ 
@@ -68,7 +70,6 @@ class App extends Component {
         <span
         onClick={() => this.displayActivated(true)}
         className={this.state.viewActivated ? "active" : "" }
-
         >
           Activated Devices
         </span>
@@ -89,9 +90,8 @@ class App extends Component {
         <span className={`list-name m-3 ${this.state.viewActivated ? "activated-list" : ""}`} name={device.name}>
           {device.name}
         </span>
-        <span>
-          <button className={`btn btn-success m-3 ${this.state.viewActivated}`}>On</button>
-          <button className="btn btn-danger m-3">Off</button>
+        <span className="switch-button">
+        <BootstrapSwitchButton checked={`${this.state.viewActivated}`} onstyle="success" offstyle="danger" height={40} width={70}/>
         </span>
       </li>
     ))
@@ -103,26 +103,27 @@ class App extends Component {
 
   render () {
     return (
-      <main className="content p-3 mb-2 bg-info">
-        <h1 className="text-white text-uppercase text-center my-4"> Device Manager </h1>
+      <main className="content p-3 mb-2">
+        <h1 className="text-light text-uppercase text-center my-4"> Smart Device Manager </h1>
         <div className="row">
           <div className="col-md-6 col-sm-10 mx-auto p-0">
-            <div className="card p=3">
+            <div className="static-position card p=3">
               <div>
-                <button className="btn btn-warning m-3"> Change Temperature Settings </button>
+                <Temperature className="temp-counter" />
               </div>
-              {this.renderDeviceList()}
-              <ul className=" list-group list-group-flush">
-              {this.renderDevices()}
-              </ul>
-              <span>
+              <h1 className="text-secondary text-uppercase text-center">
+              {this.renderDeviceList()} </h1>
+              <span className="text-center">
                   <button className="btn btn-success m-3">Enable All Devices</button>
                   <button className="btn btn-danger m-3">Disable All Devices</button>
               </span>
+              <ul className=" list-group list-group-flush">
+              {this.renderDevices()}
+              </ul>
             </div>
           </div>
         </div>
-        <footer className="m-4 mb-2 bg-info text-white text-center">Copyright 2023 &copy; All Rights Reserved</footer>
+        <footer className="m-4 mb-2 text-light text-center">Copyright 2023 &copy; All Rights Reserved</footer>
 
       </main>
     );
