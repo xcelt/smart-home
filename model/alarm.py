@@ -10,17 +10,20 @@ class Alarm:
         self.enabled = False
         Alarm.alarmList.append(self)
 
+    def __str__(self) -> str:
+        return self.name
+
     def enable(self):
         self.enabled = True
 
     def disable(self):
         self.enabled = False
 
-    def __str__(self) -> str:
-        return self.name
+    def is_enabled(self):
+        return self.enabled
 
     def get_alarms():
-        print(Alarm.alarmList)
+        return Alarm.alarmList
 
     def display_alarms():
         print(*Alarm.alarmList, sep=", ")
