@@ -1,66 +1,65 @@
 import React, { Component } from 'react'
 import './App.css';
-import CustomModal from "./components/Modal"
+import axios from 'axios'
 import Temperature from "./components/Temperature"
 import BootstrapSwitchButton from 'bootstrap-switch-button-react' // needs to be added to req'd deps
 
-// Will be removed once hooked up to backend
-const devices = [ 
-  {
-    id: 1,
-    name: "Camera",
-    activated: true,
-  },
-  {
-    id: 2,
-    name: "Thermostat",
-    activated: true,
-    temperatureSet: true,
-    temperature: 22,
-      
-  },
-  {
-    id: 3,
-    name: "Lighting",
-    activated: true,
-  },
-  {
-    id: 4,
-    name: "Smart Lock",
-    activated: true,
-  },
-  {
-    id: 5,
-    name: "Alarm",
-    activated: true,
-  },
-  {
-    id: 6,
-    name: "Motion Sensor",
-    activated: true,
-  },
-]
+// Main code Reference: 
+// Chat GPT corrections (ChatGPT, 2023):
+// 41:45: ...devices" ==> ...devices/"
+// 60:7: return this.setState({ deviceEnabled: true}) ==> return this.state.deviceEnabled;
+// 72:28: { viewActivated } ==> 
+// 81:42: onClick={this.handleSubmit() --> onClick={ () => this.handleSubmit(device)}
+// 93:83: checked=[this.displayEnabled] ==> checked={this.displayEnabled(device.enabled)}
+// 103:30: className ==> class
+// See full source list in README/References
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      modal: false,
+      deviceEnabled: false,
       viewActivated: true,
-      deviceList: devices,
-      activeItem: {
-        Name: "",
-        value: "",
-        completed: false,
-      }
+      deviceList: []
     };
   }
+
+  componentDidMount() {
+    this.refreshList();
+  }
+
+  refreshList = () => {
+    axios
+    .get("http://localhost:8000/api/devices/")
+    .then(res => this.setState({ deviceList: res.data }))
+    .catch(err => console.log(err))
+  };
+  
+  handleSubmit = device => {
+    if (device.id) {
+      axios
+      .put(`http://localhost:8000/api/tasks/${device.id}/`, device)
+      .then(res => this.refreshList())
+    }
+    axios
+    .post("http://localhost:8000/api/devices/", device)
+    .then(res => this.refreshList()
+    )
+  }
+
 // Checks if device is activated or not
   displayActivated = status => {
     if (status) {
       return this.setState({ viewActivated: true })
     }
     return this.setState({ viewActivated: false })
+  }
+
+  displayEnabled = status => {
+    if (status) {
+      return !this.state.deviceEnabled;
+    }
+    return this.state.deviceEnabled;
   }
 
 // Renders activated and inactive devices under proper heading
@@ -79,7 +78,7 @@ class App extends Component {
 
 // Rendering devices in the list { activated || inactive }
   renderDevices = () => {
-    const { viewActivated } = this.state;
+    const { viewActivated, deviceList } = this.state;
     const newDevices = this.state.deviceList.filter(
       device => device.activated === viewActivated
     );   
@@ -91,15 +90,13 @@ class App extends Component {
           {device.name}
         </span>
         <span className="switch-button">
-        <BootstrapSwitchButton checked={`${this.state.viewActivated}`} onstyle="success" offstyle="danger" height={40} width={70}/>
+        <BootstrapSwitchButton onClick={ () => this.handleSubmit(device) } checked={this.displayEnabled(device.enabled)} onstyle="success" offstyle="danger" height={40} width={70}/>
         </span>
       </li>
     ))
   
   
   };
-
- 
 
   render () {
     return (
@@ -108,8 +105,8 @@ class App extends Component {
         <div className="row">
           <div className="col-md-6 col-sm-10 mx-auto p-0">
             <div className="static-position card p=3">
-              <div>
-                <Temperature className="temp-counter" />
+              <div> 
+                <Temperature class="temp-counter" /> 
               </div>
               <h1 className="text-secondary text-uppercase text-center">
               {this.renderDeviceList()} </h1>
