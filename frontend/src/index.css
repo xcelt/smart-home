@@ -1,0 +1,40 @@
+main {
+  background-color: rgb(14, 107, 165);
+}
+body{
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+ 
+}
+
+.static-position {
+  margin: auto;
+  width: fit-content;
+  padding: 10px
+}
+h1 {
+  text-shadow: #000;
+}
+.list-group-device{
+  align-items: center;
+}
+
+.list-name{
+  cursor:pointer;
+}
+
+.temperature {
+  border:1px solid rgb(14, 107, 165);
+  border-radius:10px;
+  margin-right:20px;
+}
+
+.temp-align {
+  margin-left: 3px;
+}
+
+.switch-button {
+  margin-right: 12px
+}
