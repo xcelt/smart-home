@@ -16,14 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from devices import views
+from devices import views as device_views # Chat GPT
+from temperature import views as temperature_views # ChatGPT
 from rest_framework import routers
 
 # allows us to make queries
 router = routers.DefaultRouter()
-router.register(r'devices', views.DevicesView, 'device')
+router.register(r'devices', device_views.DevicesView, 'device')
+router.register(r'temperature', temperature_views.TemperatureView, 'temperature')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
 ]
