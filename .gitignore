@@ -1,0 +1,5 @@
+.vscode
+VENV
+TEMP
+
+__pycache__
