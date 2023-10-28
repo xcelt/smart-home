@@ -4,3 +4,4 @@ VENV
 TEMP
 
 __pycache__
+node_modules
