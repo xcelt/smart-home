@@ -36,25 +36,11 @@ class App extends Component {
   };
   
   enableDevice = device => {
-    const updatedDeviceList = this.state.deviceList.map(update => {
-      if(update.id === device.id) {
-        return { ...update, enabled: !update.enabled };
-      }
-      return update;
-    });
-  
-    const updatedDevice = {
-      ...device,
-      enabled: !device.enabled
-    };
-  
     axios
-      .patch(`http://localhost:8000/api/devices/${device.id}/`, updatedDevice)
-      .then(res => {
-        this.setState({ deviceList: updatedDeviceList });
-      })
+      .patch(`http://localhost:8000/api/devices/${device.id}/`, device)
+      .then(res => this.refreshDeviceList())
       .catch(err => console.log(err))
-  };
+    };
 
 // Checks if device is activated or not
   displayActivated = status => {
@@ -65,7 +51,7 @@ class App extends Component {
   }
   //ChatGPT ==> Original: "return this.setState({deviceEnabled: true})"
   displayEnabled = status => {
-    return this.componentDidMount
+    return status
   }
 
 // Renders activated and inactive devices under proper heading
@@ -100,7 +86,7 @@ class App extends Component {
         <span className="switch-button">
         <BootstrapSwitchButton 
           onClick={() => this.enableDevice(device) } 
-          checked={device.enabled} 
+          checked={this.displayEnabled(device.enabled)} 
           onstyle="light" 
           offstyle="secondary" 
           height={40} 
