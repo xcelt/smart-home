@@ -18,9 +18,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      deviceEnabled: false,
       viewActivated: true,
-      deviceList: []
+      deviceList: [],
     };
   }
 
@@ -32,40 +31,27 @@ class App extends Component {
     axios
     .get("http://localhost:8000/api/devices/")
     .then(res => this.setState({ deviceList: res.data }))
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
   };
   
   enableDevice = device => {
-    const updatedDeviceList = this.state.deviceList.map(update => {
-      if(update.id === device.id) {
-        return { ...update, enabled: !update.enabled };
-      }
-      return update;
+    const { deviceList } = this.state;
+    const updatedDeviceList = deviceList.map(update => {
+        if (update.id === device.id) {
+            return { ...update, enabled: !update.enabled };
+        }
+        return update;
     });
-  
-    const updatedDevice = {
-      ...device,
-      enabled: !device.enabled
-    };
-  
+
     axios
-      .patch(`http://localhost:8000/api/devices/${device.id}/`, updatedDevice)
-      .then(res => {
-        this.setState({ deviceList: updatedDeviceList });
-      })
-      .catch(err => console.log(err))
+      .patch(`http://localhost:8000/api/devices/${device.id}/`, device)
+      .then(res => this.setState({ deviceList: updatedDeviceList }))
+      .catch(err => console.log(err));
   };
 
-// Checks if device is activated or not
+// ChatGPT ==> Original {return this.setState({ viewActivated: true })} return this.setState({ viewActivated: false })}
   displayActivated = status => {
-    if (status) {
-      return this.setState({ viewActivated: true })
-    }
-    return this.setState({ viewActivated: false })
-  }
-  //ChatGPT ==> Original: "return this.setState({deviceEnabled: true})"
-  displayEnabled = status => {
-    return this.componentDidMount
+    this.setState({ viewActivated: status });
   }
 
 // Renders activated and inactive devices under proper heading
