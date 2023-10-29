@@ -12,7 +12,7 @@ The following program is a prototype for The Smart Home by The A Team (Group 1) 
    
 3. Run `python initialise.py` (Windows) || `python3 initialise.py` (Linux)
 
-This will initialise the RSA and Ferent keys for encryption.
+This will initialise the RSA and Fernet keys for encryption.
 
 ![initialise.py](./images/initialise.png)
 
@@ -39,7 +39,7 @@ Device settings can be manipulated by interacting with the client interface in `
 
 ### Security Testing
 
-Testing the ability of RSA and Fernet encryption to withstand hash identification is at the heart of this project. Our team sought to build a comprehensive clienthub and server that could simulate actual smart device use, and then encrypt that program. Our goal was then to demonstrate that RSA and Ferent encryption hashes were harder to crack than SHA512 hashes. 
+Testing the ability of RSA and Fernet encryption to withstand hash identification is at the heart of this project. Our team sought to build a comprehensive clienthub and server that could simulate actual smart device use, and then encrypt that program. Our goal was then to demonstrate that RSA and Fernet encryption hashes were harder to crack than SHA512 hashes. 
 
 RSA was chosen as an encryption key (Hamza & Kumar, 2020) because 
 * it is asymmetric and has both public and private keys
