@@ -15,7 +15,7 @@ The following program is a prototype for The Smart Home by The A Team (Group 1) 
 
 This will initialise the RSA and Ferent keys for encryption.
 
-[!initialise.py](./images/initialise.png)
+![initialise.py](./images/initialise.png)
 
 ## Run the Program
 On a separate terminal each:
@@ -24,11 +24,11 @@ On a separate terminal each:
 
 Device simulation is set by running `deviceservice.py`. 
 
-[!deviceservice.py](./images/deviceservice.png)
+![deviceservice.py](./images/deviceservice.png)
 
 Device settings can be manipulated by interacting with the client interface in `hub.py` 
 
-[!hub](./images/hub)
+![hub](./images/hub)
 
 ## Assumptions
 1. For the purpose of this proof of concept demo, the devices are assumed to use the same set of public and private encryption keys
@@ -62,23 +62,23 @@ Proving the veracity of an encryption algorithm can be difficult outside the rea
 
 To set a null hypothesis, we took a piece of code from an unused earlier version of our project and implemented SHA512 to encrypt some passwords and ran the program to generate a hash:
 
-[!SHA512 Code](./images/SHA512code.png)
+![SHA512 Code](./images/SHA512code.png)
 
-[!SHA512 Hash](./images/SHA512hash.png)
+![SHA512 Hash](./images/SHA512hash.png)
 
 We then ran this hash through the popular command line tool _Hashid_ (xxxx, xxxx), which can determine the type of hash presented to be further decrypted by bruteforcing tools like _Hashcat_ (xxxx,). This resulted in a positive hit in the system, correctly determining the hash to be SHA512:
 
-[!Hashid512](./images/hashid512.png)
+![Hashid512](./images/hashid512.png)
 
 The real-world effort to cracking this hash would be minimal, and those without much hacking skill would be able to figure out how to do so from a hacking tutorial on Youtube (XXXX, XXXX).
 
 We then repeated the process for the RSA and Fernet hashes, which were provided during initialisation. Both the RSA hash and Fernet hashes were tested using three hash-line configurations: full, base, and with backticks, and were found to be unknown in the _hashid_ system: 
 
-[!RSAFERN](./images/RSAFERN.png)
+![RSAFERN](./images/RSAFERN.png)
 
-[!hashidrsa](./images/hashidrsa.png)
+![hashidrsa](./images/hashidrsa.png)
 
-[!hashidfern](./image/hashidfern.png)
+![hashidfern](./image/hashidfern.png)
 
 These results indicate the encryption algorithms are not readily available, as _hashid_ is a well known hacking tool and is quite comprehensive in scope (xxxx, xxxx) and thus take more resources and commitment to crack. 
 
@@ -88,8 +88,8 @@ We used the website `https://www.dcode.fr/cipher-identifier` to see if the ciphe
 
 Results did not result in either RSA or Fernet suggestions:
 
-[!cipherRSA](./images/cipherRSA.png)
+![cipherRSA](./images/cipherRSA.png)
 
-[!cipherFERN](./images/cipherFERN.png)
+![cipherFERN](./images/cipherFERN.png)
 
 With this it can be considered that basic hacking skills and knowledge do not result in easy idenfication of RSA and Fernet encryption keys. Though it is true that all encryption can be broken, the resources and commitment required to identify and bruteforce the hashed keys can be great deterrents to cyber attackers. SHA512 was idenfied with little effort or knowledge on behalf of the hacker; RSA and Fernet were not so easy to break. We can thus conclude with this limited test that RSA and Fernet encryption keys are more robust than SHA512 encryption, and so we utilised them in our program accordingly.
