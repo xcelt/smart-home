@@ -52,7 +52,7 @@ Forent was chosen as an encryption key (Pronika & Tyagi, 2021) because
 
 These keys were used together in the project, as it is standard practice to have async and sync encryption in IoT (Tang & Zhoi, 2011).
 
-SHA512 was chosen as a control encryption key because
+SHA512 was chosen as a control encryption (null hypothesis) key because
 * it is standardized by NIST (Dobraunig et al, 2015)
 * it is the "most widely used hash function" (Ambat et al, 2020), and is considered more secure than other hash functions
 
@@ -70,15 +70,15 @@ We then ran this hash through the popular command line tool _Hashid_ (xxxx, xxxx
 
 ![Hashid512](./images/hashid512.png)
 
-The real-world effort to cracking this hash would be minimal, and those without much hacking skill would be able to figure out how to do so from a hacking tutorial on Youtube (XXXX, XXXX).
+The real-world effort to cracking this hash would be minimal, and those without much hacking skill would be able to figure out how to do so from a hacking tutorial on Youtube (XXXX, XXXX). We thus set this as our H0: all hashes would behave similarly to SHA512.
 
 We then repeated the process for the RSA and Fernet hashes, which were provided during initialisation. Both the RSA hash and Fernet hashes were tested using three hash-line configurations: full, base, and with backticks, and were found to be unknown in the _hashid_ system: 
 
-![RSAFERN](./images/RSAFERN.png)
+![RSAFERN](./images/rsafern_init.png)
 
 ![hashidrsa](./images/hashidrsa.png)
 
-![hashidfern](./image/hashidfern.png)
+![hashidfern](./images/hashidfern.png)
 
 These results indicate the encryption algorithms are not readily available, as _hashid_ is a well known hacking tool and is quite comprehensive in scope (xxxx, xxxx) and thus take more resources and commitment to crack. 
 
@@ -93,3 +93,17 @@ Results did not result in either RSA or Fernet suggestions:
 ![cipherFERN](./images/cipherFERN.png)
 
 With this it can be considered that basic hacking skills and knowledge do not result in easy idenfication of RSA and Fernet encryption keys. Though it is true that all encryption can be broken, the resources and commitment required to identify and bruteforce the hashed keys can be great deterrents to cyber attackers. SHA512 was idenfied with little effort or knowledge on behalf of the hacker; RSA and Fernet were not so easy to break. We can thus conclude with this limited test that RSA and Fernet encryption keys are more robust than SHA512 encryption, and so we utilised them in our program accordingly.
+
+## References
+
+Ambat, M. K., Bhonge, H. N., & Chandavarkar, B. R. (2020) An Experimental Evaluation of SHA-512 for Different Modes of Operation. In: _11th ICCCNT 2020, 1-3 July 2020, Kharagpur, India._ IEEE: 1 - 6
+
+Dobraunig, C., Eichlseder, M., & Mendel, F. (2015) Analysis of SHA-512/224 and SHA-512/256. In: _ASIACRYPT 2015_. International Association for Cryptologic Research: 612 - 630
+
+Pronika & Tyagi, S. S. (2021) Enhancing Security of Cloud Data through Encryption with AES and Fernet Algorithm through Convolutional-Neural-Networks (CNN). _International Journal of Computer Networks and Applications_, 8(4): 288 - 299
+
+Hamza, A. & Kumar, B. (2020) A Review Paper on DES, AES, RSA Encryption Standards. In: _9th International Conference on System Modelling & Advancement in Research Trends, 4-5 December 2020_. IEEE: 333 - 338
+
+Tang, X. & Zhou, X. (2011) Research and Implementation of RSA Algorithm for Encryption and Decryption. In: _The 6th International Forum on Strategic Technology_. IEEE: 1118 - 1121
+
+Asaad, C., Ismail, E. Naoufal, R. (2020) Fernet Symmetric Encryption Method to Gather MQTT E2E Secure Communications for IoT Devices. 
