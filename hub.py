@@ -382,7 +382,7 @@ def menu_interface():
                     continue
 
                 # Great; display the result of the operation received by the device
-                print("Result:" + result)
+                print("Result: " + result)
 
             # Otherwise, if the chosen action is any of the ones in the list below
             elif choicekey in ["devread", "act", "deact", "on", "off", "disc"]:
