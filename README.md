@@ -10,6 +10,7 @@ Prototype for The Smart Home by The A Team (Group 1), as part of the Secure Syst
 
 
 ## Testing
+On a separate terminal each:
 1. Run `python deviceservice.py`
 1. Run `python hub.py`
 
