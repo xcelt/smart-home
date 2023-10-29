@@ -1,7 +1,14 @@
-
 .idea/*
+.vscode
+.pytest_cache
 *.pyc
-Backups Junk/*
-LAST DOING.txt
-Secrets/*
+
+__pycache__
+
 stored_devices.bin
+Secrets/*
+VENV
+TEMP
+node_modules
+backend
+frontend
