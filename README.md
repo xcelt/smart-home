@@ -68,7 +68,7 @@ To set a null hypothesis, we took a piece of code from an unused earlier version
 
 We then ran this hash through the popular command line tool _Hashid_ (xxxx, xxxx), which can determine the type of hash presented to be further decrypted by bruteforcing tools like _Hashcat_ (xxxx,). This resulted in a positive hit in the system, correctly determining the hash to be SHA512:
 
-![Hashid512](./images/hashid512.png)
+![Hashid512](./images/hashis512.png)
 
 The real-world effort to cracking this hash would be minimal, and those without much hacking skill would be able to figure out how to do so from a hacking tutorial on Youtube (XXXX, XXXX). We thus set this as our H0: all hashes would behave similarly to SHA512.
 
