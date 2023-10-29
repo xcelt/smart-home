@@ -6,8 +6,15 @@ Prototype for The Smart Home by The A Team (Group 1), as part of the Secure Syst
 * Docker version: ^24.0.6
 
 ### Installing
+#### For Windows
 1. Make sure the docker is started. On Windows - this can be done by starting the Docker Desktop app.
 1. In the smart-home (root) directory, run `docker-compose up -d --build`
+#### For Linux
+1. `cd smart-home-dev-clean`
+2. `sudo apt install docker`
+3.  `sudo systemctl start docker` (sys-auto) or ` sudo dockerd` (manual)
+4.  `docker-compose up -d --build
+5.  Once finished, on browser type `localhost:3000` for frontend and `localhost:8000/api/decices/` for backend
 
 ## Testing
 Once the docker containers are running, the following sections contain guided instructions for testing the frontend and backend, respectively. 
