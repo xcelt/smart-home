@@ -28,7 +28,7 @@ Device simulation is set by running `deviceservice.py`.
 
 Device settings can be manipulated by interacting with the client interface in `hub.py` 
 
-![hub](./images/hub)
+![hub](./images/hub.png)
 
 ## Assumptions
 1. For the purpose of this proof of concept demo, the devices are assumed to use the same set of public and private encryption keys
