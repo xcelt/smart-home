@@ -490,7 +490,7 @@ def load_device_list():
     and each entry is itself a dict containing fields 'socket' which is initially None, and devtype which is the
     device type. E.g. might be something like (so you can visualize it):
     {
-    'light1': {'socket':None, 'devtype':'SmartLight'},
+    'smartlight1': {'socket':None, 'devtype':'SmartLight'},
     'motionsensor2': {'socket':None, 'devtype':'MotionSensor'}
     }
 
@@ -519,7 +519,7 @@ def save_device_list():
     where each device's key is its device id, and associated value is the devtype which is the
     device type. E.g. might be something like (so you can visualize it):
     {
-    'light1': 'SmartLight',
+    'smartlight1': 'SmartLight',
     'motionsensor2': 'MotionSensor'
     }
 

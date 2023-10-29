@@ -16,7 +16,7 @@ import threading
 import time
 
 import utils
-from device import *
+from model.device import *
 
 
 def simulate_data_update():
@@ -266,8 +266,8 @@ if __name__ == "__main__":
                     # For SmartLock this disables the lock and unlock functions
                     print("Request to set deactivate received from HUB")
 
-                    if device.status == "deactive":
-                        res = "already deactive"
+                    if device.status == "inactive":
+                        res = "already inactive"
                     else:
                         device.deactivate()
                         res = "success"
@@ -301,8 +301,8 @@ if __name__ == "__main__":
                             res = "success - motion sensor engaged"
 
                     elif isinstance(device, SmartLock):
-                        if device.status == "deactive":
-                            res = "failure - lock is deactive"
+                        if device.status == "inactive":
+                            res = "failure - lock is inactive"
                         else:
                             if device.switch == "on":
                                 res = "already locked"
@@ -347,8 +347,8 @@ if __name__ == "__main__":
                             res = "success - motion sensor disengaged"
 
                     elif isinstance(device, SmartLock):
-                        if device.status == "deactive":
-                            res = "failure - lock is deactive"
+                        if device.status == "inactive":
+                            res = "failure - lock is inactive"
                         else:
                             if device.switch == "off":
                                 res = "already unlocked"
