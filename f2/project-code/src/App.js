@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import './App.css';
 import SearchIcon from './search.svg'
 
-const API_URL = 'http://localhost:3030/devices'
+const API_URL = 'http://localhost:8000/api/devices/'
 
 const device1 ={
   "id": 2,
