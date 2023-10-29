@@ -1,5 +1,5 @@
 """
-This module contains the classes for the IoT devices (currentl Device, from which MotionSensor, SmartLight, SmartLock and Thermostat inherit).
+This module contains the classes for the IoT devices (currently Device, from which MotionSensor, SmartLight, SmartLock and Thermostat inherit).
 Possible to seamlessly create other devices by inherting from Device and keeping to the similar structure
 """
 
@@ -9,11 +9,11 @@ import random
 
 class Device:
     """
-    The Device class represents a device with an identifier, status (active or deactive), and a threshold value.
+    The Device class represents a device with an identifier, status (active or inactive), and a threshold value.
 
     Attributes:
         identifier (str): A unique identifier for the device.
-        status (str): The status of the device, can be "active" or "deactive".
+        status (str): The status of the device, can be "active" or "inactive".
         threshold (int): The threshold value for the device's operation.
 
     Constants:
@@ -29,7 +29,7 @@ class Device:
             Activates the device, setting its status to "active."
 
         deactivate(self):
-            Deactivates the device, setting its status to "deactive."
+            Deactivates the device, setting its status to "inactive."
 
         set_threshold(self, value):
             Sets the threshold value for the device, ensuring it falls within the allowed range [THRES_MIN, THRES_MAX].
@@ -48,7 +48,7 @@ class Device:
     def __init__(self, identifier, threshold=50):
         """Initialize a new Device instance."""
         self.identifier = identifier
-        self.status = "active"  # Or deactive
+        self.status = "active"  # Or inactive
         self.set_threshold(threshold)
 
     def activate(self):
@@ -56,8 +56,8 @@ class Device:
         self.status = "active"
 
     def deactivate(self):
-        """Deactivate the device, setting its status to 'deactive'."""
-        self.status = "deactive"
+        """Deactivate the device, setting its status to 'inactive'."""
+        self.status = "inactive"
 
     def set_threshold(self, value):
         """
@@ -136,7 +136,7 @@ class SmartLight(Device):
             Simulates the smart light's ability to sense and respond to light levels. It adjusts brightness and may turn the light on or off based on thresholds.
 
     Example usage:
-        light = SmartLight("Light001", 60)
+        light = SmartLight("SmartLight001", 60)
         light.sense()
     """
 
@@ -354,7 +354,7 @@ class SmartLock(Device):
         """
         Lock the smart lock by setting the switch status to 'on' if the device is active.
         """
-        if self.status == "deactive":
+        if self.status == "inactive":
             return
         self.switch = "on"
 
@@ -362,7 +362,7 @@ class SmartLock(Device):
         """
         Unlock the smart lock by setting the switch status to 'off' if the device is active.
         """
-        if self.status == "deactive":
+        if self.status == "inactive":
             return
         self.switch = "off"
 
@@ -477,30 +477,3 @@ class Thermostat(Device):
         if self.status == "active" and self.temp >= self.threshold:
             print("Temperature threshold exceeded. Capping temperature at threshold")
             self.temp = self.threshold
-
-
-# Some code I used to test the devices; not used.
-# if __name__ == "__main__":
-#     s1 = SmartLock("sl1")
-#     s1.set_threshold(-1)
-#     print(s1.threshold)
-#
-#     print("Light")
-#     s2 = SmartLight("slt1",120)
-#     print(s2.threshold)
-#     s2.set_threshold(120)
-#     print(s2.threshold)
-#     s2.set_threshold(-20)
-#     print(s2.threshold)
-#     s2.set_threshold(40)
-#     print(s2.threshold)
-#     print("Motion")
-#     s3 = Thermostat("m",50)
-#     print(s3.threshold)
-#     s3.set_threshold(50)
-#     print(s3.threshold)
-#     s3.set_threshold(-1)
-#     print(s3.threshold)
-#     s3.set_threshold(3)
-#     print(s3.threshold)
-#     s3.sense()

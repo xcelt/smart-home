@@ -8,7 +8,7 @@ def initialise_alarms():
     sensorAlarm = Alarm(name="Senza", type=Microservice.SENSOR)
     thermostatAlarm = Alarm("Thano", Microservice.THERMOSTAT)
     cameraAlarm = Alarm("Cameron", Microservice.CAMERA)
-    lightAlarm = Alarm("Lightsaber", Microservice.LIGHT)
+    lightAlarm = Alarm("SmartLightsaber", Microservice.LIGHT)
     smartlockAlarm = Alarm("Sherlock", Microservice.SMART_LOCK)
 
 
