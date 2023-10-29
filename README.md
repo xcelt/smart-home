@@ -8,8 +8,7 @@ The following program is a prototype for The Smart Home by The A Team (Group 1) 
 
 ### Installing
 1. Install the required dependencies in `requirements.txt`:
-2. 
-   ` `pip install -r requirements.txt` (Windows) || `pip3 install -r requirements.txt`
+   * `pip install -r requirements.txt` (Windows) || `pip3 install -r requirements.txt`
    
 3. Run `python initialise.py` (Windows) || `python3 initialise.py` (Linux)
 
@@ -20,7 +19,7 @@ This will initialise the RSA and Ferent keys for encryption.
 ## Run the Program
 On a separate terminal each:
 1. Run `python deviceservice.py` || `python3 deviceservice.py`
-2. Run `python hub.py` || 'python3 hub.py`
+2. Run `python hub.py` || `python3 hub.py`
 
 Device simulation is set by running `deviceservice.py`. 
 
