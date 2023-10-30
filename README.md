@@ -8,9 +8,13 @@ The following program is a prototype for The Smart Home by The A Team (Group 1) 
 
 ### Installing
 1. Install the required dependencies in `requirements.txt`:
-   * `pip install -r requirements.txt` (Windows) || `pip3 install -r requirements.txt`
+   * `pip install -r requirements.txt` (Windows) || `pip3 install -r requirements.txt` (Linux)
    
-3. Run `python initialise.py` (Windows) || `python3 initialise.py` (Linux)
+3. Run `python initialise.py` || `python3 initialise.py`
+   * <b>Please note</b>: `initialise.py` should only be run once per computing environment. If it is run more than once, the code will break.
+   * To create a separate environment, follow these steps:
+     * `python -m venv [name of environment]` || `python3 -m venv [name of environment]`
+     * `source [name of env]/bin/activate` || `source [name of env]/bin/activate`
 
 This will initialise the RSA and Fernet keys for encryption.
 
@@ -35,7 +39,7 @@ Device settings can be manipulated by interacting with the client interface in `
 ## Discussion
 
 ### Program testing
-The code was tested for _____ using pylint (xxxx, xxxx), which produced the following results:
+The code was tested for _____ using pylint (PyPi, 2023), which produced the following results:
 
 ![pylint_init](./images/pylint_initialise.png)
 ![pyline deviceservices](./images/pylint_device.png)
@@ -141,6 +145,7 @@ PyPi (2015) _HashID 3.1.4_ | PyPi. pypi.org. [Available Online] https://pypi.org
 
 PyPi (2022) _Ciphey 5.14.0_ | PyPi. pypi.org. [Available Online] https://pypi.org/project/ciphey/
 
+PyPi (2023) _Pylint 3.0.2_ | PyPi. pypi.org [Available Online] https://pypi.org/project/pylint/#:~:text=Pylint%20is%20a%20static%20code,the%20code%20could%20be%20refactored.
 Tang, X. & Zhou, X. (2011) Research and Implementation of RSA Algorithm for Encryption and Decryption. In: _The 6th International Forum on Strategic Technology_. IEEE: 1118 - 1121
 
 Asaad, C., Ismail, E. Naoufal, R. (2020) Fernet Symmetric Encryption Method to Gather MQTT E2E Secure Communications for IoT Devices. 
