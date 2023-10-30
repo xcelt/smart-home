@@ -47,8 +47,8 @@ def handle_device(device_socket, device_address):
         # If the device id is not registered
         if deviceid not in device_list:
             print(
-                f"New {request_data['devtype']} device connected with identifier {deviceid} \
-                from {device_address}"
+                f"\nNew {request_data['devtype']} device connected with identifier {deviceid}"
+                + f" from {device_address}"
             )
 
             # Register the device info in the device_list dict Device info stored include the device
@@ -77,8 +77,8 @@ def handle_device(device_socket, device_address):
                 "devtype": request_data["devtype"],
             }
             print(
-                f"Registered {request_data['devtype']} device {deviceid} connected from \
-                {device_address}."
+                f"Registered {request_data['devtype']} device {deviceid} connected from "
+                + f"{device_address}."
             )
 
         # Send a (secure encrypted) message to the device through its socket informing it that
@@ -90,8 +90,8 @@ def handle_device(device_socket, device_address):
     # by the device are incorrect
     else:
         print(
-            f"Connection request from {device_address} invalid (credentials invalid or didn't \
-            make connection request)"
+            f"Connection request from {device_address} invalid (credentials invalid or didn't "
+            + "make connection request)"
         )
         # Send a (secure encrypted) message to the device through its socket informing it of failure
         msg = {"result": "failure"}
@@ -548,19 +548,16 @@ if __name__ == "__main__":
     print("Simulated IoT Device Controller HUB")
     print("This device listens for connection requests by smart IoT devices")
     print("It 'registers' these devices once they request to connect the first time")
-    print("It also allows the user to get access to the device functions\n\n")
+    print("It also allows the user to get access to the device functions")
 
     print(
-        "\n Also, usually the protocol would require exchange of public keys for secure \
-            communications."
+        "Also, usually the protocol would require exchange of public keys for secure communications."
     )
     print(
-        "In this demo, we are assuming this has been done and the public keys have been generated \
-            and exchanged."
+        "In this demo, we are assuming this has been done and the public keys have been generated and exchanged."
     )
     print(
-        "For demo purposes, the hub and all devices public keys have been generated using the \
-            './initialise.py' script."
+        "For demo purposes, the hub and all devices public keys have been generated using the './initialise.py' script."
     )
     print(
         "They will be loaded from file by hub and devices and used for communications"

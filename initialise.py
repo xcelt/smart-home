@@ -93,9 +93,6 @@ credentials = {"user": SERVER_USER, "pass": SERVER_PASS}
 
 fer_key = utils.load_fernet_key("./Secrets/dev_enc.key")
 
-ENCRYPTED_CREDENTIALS = utils.encrypt_and_save_fernet(
-    credentials, fer_key, "./Secrets/creds.bin"
-)
 
-if ENCRYPTED_CREDENTIALS:
+if utils.encrypt_and_save_fernet(credentials, fer_key, "./Secrets/creds.bin"):
     print("Credentials created and saved to './Secrets/creds.bin'")

@@ -62,7 +62,7 @@ def load_and_decrypt_fernet(fer_key, filename):
 
     except FileNotFoundError as e:
         logging.error(
-            "File name or path could not be found. Error loading public key: %s",
+            "File name or path could not be found. Error loading file: %s",
             e,
             exc_info=True,
         )
