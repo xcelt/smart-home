@@ -101,8 +101,8 @@ Other cipher testing included:
 
 Ciphey CLI tool (XXXX, XXXX), which was not able to download:
 
-[Ciphey1](./images/ciphey1.png)
-[Ciphey2](./images/ciphey2.png)
+![Ciphey1](./images/ciphey1.png)
+![Ciphey2](./images/ciphey2.png)
 
 Katana Encryption tool, which was proprietary and required knowledge of the key encryption algorithm type:
 
