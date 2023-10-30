@@ -81,9 +81,9 @@ We then repeated the process for the RSA and Fernet hashes, which were provided 
 
 These results indicate the encryption algorithms are not readily available, as _hashid_ is a well known hacking tool and is quite comprehensive in scope (xxxx, xxxx) and thus take more resources and commitment to crack. 
 
-Even so, we wanted to do an additional test to see if the RSA and Fernet encryption hashes could be broken through an encryption website. RSA and Fernet may not be included in hash-defeat command-line tools, but they may be vulnerable against dedicated cipher-cracking.
+Even so, we wanted to do some additional tests to see if the RSA and Fernet encryption hashes could be broken through an encryption website. RSA and Fernet may not be included in hash-defeat command-line tools, but they may be vulnerable against dedicated cipher-cracking.
 
-We used the website `https://www.dcode.fr/cipher-identifier` to see if the cipher type could be recognised. This website has a comprehensive cipher library, and though it is not a hacking website is easily accessible to hackers looking to verify encryption type.
+First, we used the website `https://www.dcode.fr/cipher-identifier` to see if the cipher type could be recognised. This website has a comprehensive cipher library, and though it is not a hacking website is easily accessible to hackers looking to verify encryption type.
 
 Results did not result in either RSA or Fernet suggestions:
 
@@ -91,7 +91,29 @@ Results did not result in either RSA or Fernet suggestions:
 
 ![cipherFERN](./images/cipherFERN.png)
 
-With this it can be considered that basic hacking skills and knowledge do not result in easy idenfication of RSA and Fernet encryption keys. Though it is true that all encryption can be broken, the resources and commitment required to identify and bruteforce the hashed keys can be great deterrents to cyber attackers. SHA512 was idenfied with little effort or knowledge on behalf of the hacker; RSA and Fernet were not so easy to break. We can thus conclude with this limited test that RSA and Fernet encryption keys are more robust than SHA512 encryption, and so we utilised them in our program accordingly.
+Other cipher testing included:
+
+https://www.boxentriq.com/code-breaking/cipher-identifier, which could not identify the type of keys used (XXXX)
+
+![boxRSA](./images/boxrsa.png)
+
+![boxFERN](./images/boxfern.png)
+
+Ciphey CLI tool (XXXX, XXXX), which was not able to download:
+
+[Ciphey](./images/ciphey.png)
+
+Katana Encryption tool, which was proprietary and required knowledge of the key encryption algorithm type:
+
+![Katana](./images/katana.png)
+
+https://gchq.github.io/CyberChef/, which required knowledge of the key encryption algorithm type. 
+
+![CyberChef](./images/katana.png)
+
+Solving for the keys with Katana or CyberChef would be possible, but time and resource intensive as the hacker would have to run the decryption cycle on several algorithm types. With this it can be deduced that basic hacking skills and knowledge do not result in easy idenfication of RSA and Fernet encryption keys.
+
+Though it is true that all encryption can be broken, the resources and commitment required to identify and bruteforce the hashed keys can be great deterrents to cyber attackers. SHA512 was idenfied with little effort or knowledge on behalf of the hacker; RSA and Fernet were not so easy to break. We can thus conclude with this limited test that RSA and Fernet encryption keys are more robust than SHA512 encryption, and so we utilised them in our program accordingly.
 
 ## References
 
