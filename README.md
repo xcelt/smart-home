@@ -41,7 +41,7 @@ For the purpose of this proof of concept demo:
 ## Discussion
 
 ### Program testing
-The code was tested using pylint (PyPi, 2023) to evaluate the quality according to the style recommended by PEP 8 (xx, xx), which produced the following results:
+The code was tested using pylint (PyPi, 2023) to evaluate the code quality according to PEP-8 (PyPi, 2013) styling, which produced the following results:
 
 ![pylint_init](./images/pylint_initialise.png)
 ![pylint device](./images/pylint_device.png)
@@ -49,13 +49,13 @@ The code was tested using pylint (PyPi, 2023) to evaluate the quality according 
 ![pylint utils](./images/pylint_utils.png)
 ![pylint hub](./images/pylint_hub.png)
 
-It should be noted that in future iterations, improvements to the code can be made according to the suggestions as shown in the screenshots, resulting in a higher pylint score. Some recommendations are considerations. 
+In future iterations, improvements to the code can be made according to the suggestions as shown in the screenshots.  
 
-Given the time constraints and the simplified scope of a proof of concept, this demo program is able to simulate storing encrypted file data and establishing a secure connection between client (hub) and server (device_service) to send encrypted messages to each other.
+Given the time constraints and the simplified scope of a proof of concept, this program is meant to simulate storing encrypted file data and establishing a secure connection between client (hub) and server (device_service) for encrypted communication.
 
 ### Security Testing
 
-Testing the ability of RSA and Fernet encryption to withstand hash identification is at the heart of this project. Our team sought to build a comprehensive clienthub and server that could simulate actual smart device use, and then encrypt that program. Our goal was then to demonstrate that RSA and Fernet encryption hashes were harder to crack than SHA512 hashes. 
+Testing the ability of RSA and Fernet encryption to withstand hash identification is at the heart of this project. Our goal was then to demonstrate that RSA and Fernet encryption hashes were harder to crack than SHA512 hashes. 
 
 RSA was chosen as an encryption key (Hamza & Kumar, 2020) because 
 * it is asymmetrical and has both public and private keys
@@ -153,6 +153,9 @@ PyPi (2015) _HashID 3.1.4_ | PyPi. pypi.org. [Available Online] https://pypi.org
 PyPi (2022) _Ciphey 5.14.0_ | PyPi. pypi.org. [Available Online] https://pypi.org/project/ciphey/
 
 PyPi (2023) _Pylint 3.0.2_ | PyPi. pypi.org [Available Online] https://pypi.org/project/pylint/#:~:text=Pylint%20is%20a%20static%20code,the%20code%20could%20be%20refactored.
+
+PyPi (2013) _PEP8 - Style Guide for Python Code_ | PyPi. pypi.org. [Available Online] https://peps.python.org/pep-0008/
+
 Tang, X. & Zhou, X. (2011) Research and Implementation of RSA Algorithm for Encryption and Decryption. In: _The 6th International Forum on Strategic Technology_. IEEE: 1118 - 1121
 
 Asaad, C., Ismail, E. Naoufal, R. (2020) Fernet Symmetric Encryption Method to Gather MQTT E2E Secure Communications for IoT Devices. 
