@@ -36,8 +36,8 @@ Device settings can be manipulated by interacting with the client interface in `
 
 ### Program testing
 
-![pylint_init](./images/pylint_initialise.py)
-![pyline deviceservices](./images/pylint_devices.py)
+![pylint_init](./images/pylint_initialise.png)
+![pyline deviceservices](./images/pylint_device.png)
 
 ### Security Testing
 
