@@ -5,8 +5,8 @@
 
 __pycache__
 
-stored_devices.bin
-Secrets/*
+*.key
+*.bin
 VENV
 TEMP
 node_modules
