@@ -53,6 +53,10 @@ In future iterations, improvements to the code can be made according to the sugg
 
 Given the time constraints and the simplified scope of a POC, this program is meant to simulate storing encrypted file data and establishing a secure connection between client (hub) and server (device_service) for encrypted communication.
 
+![pytest_output](./images/device_test_output.png)
+
+Unit tests have been written using unittest and tested using pytest. As shown in the screenshot above, all tests pass.
+
 ### Security Testing
 
 Testing the ability of RSA and Fernet encryption to withstand hash identification is at the heart of this project. Our goal was then to demonstrate that RSA and Fernet encryption hashes were harder to crack than SHA512 hashes. 
