@@ -35,9 +35,12 @@ Device settings can be manipulated by interacting with the client interface in `
 ## Discussion
 
 ### Program testing
+The code was tested for _____ using pylint (xxxx, xxxx), which produced the following results:
 
 ![pylint_init](./images/pylint_initialise.png)
 ![pyline deviceservices](./images/pylint_device.png)
+
+It should be noted that
 
 ### Security Testing
 
