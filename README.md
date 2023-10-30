@@ -71,7 +71,7 @@ We then ran this hash through the popular command line tool _Hashid_ (xxxx, xxxx
 
 The real-world effort to cracking this hash would be minimal, and those without much hacking skill would be able to figure out how to do so from a hacking tutorial on Youtube (XXXX, XXXX). We thus set this as our H0: all hashes would behave similarly to SHA512.
 
-We then repeated the process for the RSA and Fernet hashes, which were provided during initialisation. Both the RSA hash and Fernet hashes were tested using three hash-line configurations: full, base, and with backticks, and were found to be unknown in the _hashid_ system: 
+We then repeated the process for the RSA and Fernet hashes, which were provided during initialisation. Both the RSA hash and Fernet hashes were tested using both full and base configurations, and were found to be unknown in the _hashid_ system: 
 
 ![RSAFERN](./images/rsafern_init.png)
 
