@@ -1,5 +1,5 @@
 # Smart Home Prototype (SSA 2023)
-The following program is a prototype for The Smart Home by The A Team (Group 1) to satify the requirements of Assignment 2 of the Secure System Architecture module. The program comprises an initialiser, server, and client hub, and has been encrypted with RSA and Fernet keys. The focus of the project hypothesis question are the veracity of these keys' security as compared to SHA512.
+The following program is a proof of concept (POC) for The Smart Home by The A Team (Group 1) to satify the requirements of Assignment 2 of the Secure System Architecture module. The program comprises an initialiser, server, and client hub, and has been encrypted with RSA and Fernet keys. The focus of the project hypothesis question are the veracity of these keys' security as compared to SHA512.
 
 ## Setup
 ### Prerequisites
@@ -34,7 +34,7 @@ Device settings can be manipulated by interacting with the client interface in `
 ![hub](./images/hub.png)
 
 ## Assumptions
-For the purpose of this proof of concept (POC) demo: 
+For the purpose of this POC demo: 
 1. The server username and password are hard-coded.
 2. The devices are assumed to use the same set of public and private encryption keys.
    
