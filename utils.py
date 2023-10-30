@@ -11,6 +11,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 
+# Set logging level to logging.ERROR to view error logs
 logging.basicConfig(format="%(asctime)s - %(message)s", level=logging.INFO)
 
 

@@ -1,15 +1,19 @@
 """
-Helper module that creates the HUB and device public and private keys, as well as an encryption key to be used to
-store/retrieve info from disk
+Helper module that creates the HUB and device public and private keys, as well as an encryption key
+to be used to store/retrieve info from disk
 """
 
+import logging
+
+from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 
-from cryptography.fernet import Fernet
-
 import utils
+
+# Set logging level to logging.ERROR to view error logs
+logging.basicConfig(format="%(asctime)s - %(message)s", level=logging.INFO)
 
 
 def generate_and_save_fernet_key(keyfile):
@@ -29,7 +33,12 @@ def generate_and_save_fernet_key(keyfile):
         with open(keyfile, "wb") as encfile:
             encfile.write(key)
         return True
-    except:
+    except Exception as e:
+        logging.error(
+            "Error saving fernet key: %s",
+            e,
+            exc_info=True,
+        )
         return False
 
 
@@ -38,8 +47,8 @@ def generate_and_save_keys(public_key_file, private_key_file):
     Generate an RSA key pair, extract and save the public and private keys to separate files.
 
     Args:
-        public_key_file (str): Path to the file where the public key will be saved.
-        private_key_file (str): Path to the file where the private key will be saved.
+        public_key_file (str): Path to the file where the public key will be saved. private_key_file
+        (str): Path to the file where the private key will be saved.
     """
     # Generate an RSA key pair
     private_key = rsa.generate_private_key(
@@ -60,12 +69,12 @@ def generate_and_save_keys(public_key_file, private_key_file):
     )
 
     # Write the public key to the specified file
-    with open(public_key_file, "wb") as public_key_file:
-        public_key_file.write(public_key)
+    with open(public_key_file, "wb") as pub_key_file:
+        pub_key_file.write(public_key)
 
     # Write the private key to the specified file
-    with open(private_key_file, "wb") as private_key_file:
-        private_key_file.write(private_key_pem)
+    with open(private_key_file, "wb") as pri_key_file:
+        pri_key_file.write(private_key_pem)
 
 
 print("Generating hub and device RSA keys")
@@ -77,16 +86,16 @@ generate_and_save_fernet_key("./Secrets/hub_enc.key")
 generate_and_save_fernet_key("./Secrets/dev_enc.key")
 
 # These are the simulated server credentials
-server_user = "user1"
-server_pass = "user1password"
+SERVER_USER = "user1"
+SERVER_PASS = "user1password"
 
-credentials = {"user": server_user, "pass": server_pass}
+credentials = {"user": SERVER_USER, "pass": SERVER_PASS}
 
 fer_key = utils.load_fernet_key("./Secrets/dev_enc.key")
 
-encrypted_credentials = utils.encrypt_and_save_fernet(
+ENCRYPTED_CREDENTIALS = utils.encrypt_and_save_fernet(
     credentials, fer_key, "./Secrets/creds.bin"
 )
 
-if encrypted_credentials:
+if ENCRYPTED_CREDENTIALS:
     print("Credentials created and saved to 'Secrets/creds.bin'")
