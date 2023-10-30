@@ -65,11 +65,11 @@ To set a null hypothesis, we took a piece of code from an unused earlier version
 
 ![SHA512 Hash](./images/SHA512hash.png)
 
-We then ran this hash through the popular command line tool _Hashid_ (xxxx, xxxx), which can determine the type of hash presented to be further decrypted by bruteforcing tools like _Hashcat_ (xxxx,). This resulted in a positive hit in the system, correctly determining the hash to be SHA512:
+We then ran this hash through the popular command line tool _Hashid_ (Pypi, 2015), which can determine the type of hash presented to be further decrypted by bruteforcing tools like _Hashcat_ (Hashcat, 2022). This resulted in a positive hit in the system, correctly determining the hash to be SHA512:
 
 ![Hashid512](./images/hashid512.png)
 
-The real-world effort to cracking this hash would be minimal, and those without much hacking skill would be able to figure out how to do so from a hacking tutorial on Youtube (XXXX, XXXX). We thus set this as our H0: all hashed keys would behave similarly to SHA512.
+The real-world effort to cracking this hash would be minimal, and those without much hacking skill would be able to figure out how to do so from a hacking tutorial on Youtube (Avocari, 2021). We thus set this as our H0: all hashed keys would behave similarly to SHA512.
 
 We then repeated the process for the RSA and Fernet hashes, which were provided during initialisation. Both the RSA hash and Fernet hashes were found to be unknown in the _hashid_ system: 
 
@@ -79,7 +79,7 @@ We then repeated the process for the RSA and Fernet hashes, which were provided 
 
 ![hashidfern](./images/hashidfern.png)
 
-We then used the website `https://www.dcode.fr/cipher-identifier` to see if the cipher type could be recognised (XXXX, XXXX). 
+We then used the website `https://www.dcode.fr/cipher-identifier` to see if the cipher type could be recognised (DCode, 2023). 
 
 Results did not return either RSA or Fernet suggestions:
 
@@ -89,22 +89,22 @@ Results did not return either RSA or Fernet suggestions:
 
 Other cipher testing included:
 
-`https://www.boxentriq.com/code-breaking/cipher-identifier`, which could not identify the type of keys used (XXXX)
+`https://www.boxentriq.com/code-breaking/cipher-identifier`, which could not identify the type of keys used (Ahlen, 2023)
 
 ![boxRSA](./images/boxrsa.png)
 
 ![boxFERN](./images/boxfern.png)
 
-Ciphey CLI tool (XXXX, XXXX), which was not able to download:
+Ciphey CLI tool (PyPi, 2021), which was not able to download:
 
 ![Ciphey1](./images/ciphey1.png)
 ![Ciphey2](./images/ciphey2.png)
 
-Katana Encryption tool, which was proprietary and required knowledge of the key encryption algorithm type:
+Katana Encryption tool (Foundry, n.d.), which was proprietary and required knowledge of the key encryption algorithm type:
 
 ![Katana](./images/katana.png)
 
-`https://gchq.github.io/CyberChef/`, which required knowledge of the key encryption algorithm type. 
+`https://gchq.github.io/CyberChef/` (gchq, 2023), which required knowledge of the key encryption algorithm type. 
 
 ![CyberChef](./images/cyberchef.png)
 
@@ -114,11 +114,27 @@ Solving for the keys with Katana or CyberChef would be possible, but time and re
 
 Ambat, M. K., Bhonge, H. N., & Chandavarkar, B. R. (2020) An Experimental Evaluation of SHA-512 for Different Modes of Operation. In: _11th ICCCNT 2020, 1-3 July 2020, Kharagpur, India._ IEEE: 1 - 6
 
+Avocari (2021) _TryHackMe | Crack the Hash_. Youtube.com. [Available Online] https://www.youtube.com/watch?v=4kJZxMd7NmM
+
+Ahlen, J. (2023) _Cipher Identifier and Analyzer_. Boxentriq. [Available Online] https://www.boxentriq.com/code-breaking/cipher-identifier
+
+gchq (2023) _CyberChef_. gchq.github.io [Available Online] https://gchq.github.io/CyberChef/
+
 Dobraunig, C., Eichlseder, M., & Mendel, F. (2015) Analysis of SHA-512/224 and SHA-512/256. In: _ASIACRYPT 2015_. International Association for Cryptologic Research: 612 - 630
 
-Pronika & Tyagi, S. S. (2021) Enhancing Security of Cloud Data through Encryption with AES and Fernet Algorithm through Convolutional-Neural-Networks (CNN). _International Journal of Computer Networks and Applications_, 8(4): 288 - 299
+DCode (2023) _Cipher Identifier_ | Cryptography. DCode. [Available Online] https://www.dcode.fr/cipher-identifier
+
+Foundry (n.d.) Katana | Try Katana Today. foundry.com. [Available Online] https://www.foundry.com/products/katana/try-katana
 
 Hamza, A. & Kumar, B. (2020) A Review Paper on DES, AES, RSA Encryption Standards. In: _9th International Conference on System Modelling & Advancement in Research Trends, 4-5 December 2020_. IEEE: 333 - 338
+
+Hashcat (2022) _Hashcat: Advanced Password Recovery_ | Hashcat. hashcat.net. [Available Online] https://hashcat.net/hashcat/
+ 
+Pronika & Tyagi, S. S. (2021) Enhancing Security of Cloud Data through Encryption with AES and Fernet Algorithm through Convolutional-Neural-Networks (CNN). _International Journal of Computer Networks and Applications_, 8(4): 288 - 299
+
+PyPi (2015) _HashID 3.1.4_ | PyPi. pypi.org. [Available Online] https://pypi.org/project/hashID/
+
+PyPi (2022) _Ciphey 5.14.0_ | PyPi. pypi.org. [Available Online] https://pypi.org/project/ciphey/
 
 Tang, X. & Zhou, X. (2011) Research and Implementation of RSA Algorithm for Encryption and Decryption. In: _The 6th International Forum on Strategic Technology_. IEEE: 1118 - 1121
 
