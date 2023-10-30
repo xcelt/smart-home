@@ -67,7 +67,7 @@ To set a null hypothesis, we took a piece of code from an unused earlier version
 
 We then ran this hash through the popular command line tool _Hashid_ (xxxx, xxxx), which can determine the type of hash presented to be further decrypted by bruteforcing tools like _Hashcat_ (xxxx,). This resulted in a positive hit in the system, correctly determining the hash to be SHA512:
 
-![Hashid512](./images/hashis512.png)
+![Hashid512](./images/hashid512.png)
 
 The real-world effort to cracking this hash would be minimal, and those without much hacking skill would be able to figure out how to do so from a hacking tutorial on Youtube (XXXX, XXXX). We thus set this as our H0: all hashes would behave similarly to SHA512.
 
@@ -93,7 +93,7 @@ Results did not result in either RSA or Fernet suggestions:
 
 Other cipher testing included:
 
-https://www.boxentriq.com/code-breaking/cipher-identifier, which could not identify the type of keys used (XXXX)
+`https://www.boxentriq.com/code-breaking/cipher-identifier`, which could not identify the type of keys used (XXXX)
 
 ![boxRSA](./images/boxrsa.png)
 
@@ -101,15 +101,16 @@ https://www.boxentriq.com/code-breaking/cipher-identifier, which could not ident
 
 Ciphey CLI tool (XXXX, XXXX), which was not able to download:
 
-[Ciphey](./images/ciphey.png)
+[Ciphey1](./images/ciphey1.png)
+[Ciphey2](./images/ciphey2.png)
 
 Katana Encryption tool, which was proprietary and required knowledge of the key encryption algorithm type:
 
 ![Katana](./images/katana.png)
 
-https://gchq.github.io/CyberChef/, which required knowledge of the key encryption algorithm type. 
+`https://gchq.github.io/CyberChef/`, which required knowledge of the key encryption algorithm type. 
 
-![CyberChef](./images/katana.png)
+![CyberChef](./images/cyberchef.png)
 
 Solving for the keys with Katana or CyberChef would be possible, but time and resource intensive as the hacker would have to run the decryption cycle on several algorithm types. With this it can be deduced that basic hacking skills and knowledge do not result in easy idenfication of RSA and Fernet encryption keys.
 
