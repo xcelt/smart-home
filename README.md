@@ -41,7 +41,7 @@ For the purpose of this POC:
 ## Discussion
 
 ### Program testing
-The code was tested using pylint (PyPi, 2023) to evaluate the code quality according to PEP-8 (PyPi, 2013) styling, which produced the following results:
+The code was tested using _pylint_ (PyPi, 2023a) to evaluate the code quality according to _PEP-8_ (Python, 2013) styling, which produced the following results:
 
 ![pylint_init](./images/pylint_initialise.png)
 ![pylint device](./images/pylint_device.png)
@@ -51,11 +51,11 @@ The code was tested using pylint (PyPi, 2023) to evaluate the code quality accor
 
 In future iterations, improvements to the code can be made according to the suggestions as shown in the screenshots.  
 
-Given the time constraints and the simplified scope of a POC, this program is meant to simulate storing encrypted file data and establishing a secure connection between client (hub) and server (device_service) for encrypted communication.
-
 ![pytest_output](./images/device_test_output.png)
 
-Unit tests have been written using unittest and tested using pytest. As shown in the screenshot above, all tests pass.
+Unit tests have been written using _unittest_ (Pytest, 2015) and tested using _pytest_ (Python, 2023). As shown in the screenshot above, all tests pass.
+
+Given the time constraints and the simplified scope of a POC, this program is meant to simulate storing encrypted file data and establishing a secure connection between client (hub) and server (device_service) for encrypted communication.
 
 ### Security Testing
 
@@ -134,6 +134,8 @@ Solving for the keys with Katana or CyberChef would be possible, but time and re
 
 Ambat, M. K., Bhonge, H. N., & Chandavarkar, B. R. (2020) An Experimental Evaluation of SHA-512 for Different Modes of Operation. In: _11th ICCCNT 2020, 1-3 July 2020, Kharagpur, India._ IEEE: 1 - 6
 
+Asaad, C., Ismail, E. Naoufal, R. (2020) Fernet Symmetric Encryption Method to Gather MQTT E2E Secure Communications for IoT Devices. 
+
 Avocari (2021) _TryHackMe | Crack the Hash_. Youtube.com. [Available Online] https://www.youtube.com/watch?v=4kJZxMd7NmM
 
 Ahlen, J. (2023) _Cipher Identifier and Analyzer_. Boxentriq. [Available Online] https://www.boxentriq.com/code-breaking/cipher-identifier
@@ -158,8 +160,10 @@ PyPi (2022) _Ciphey 5.14.0_ | PyPi. pypi.org. [Available Online] https://pypi.or
 
 PyPi (2023) _Pylint 3.0.2_ | PyPi. pypi.org [Available Online] https://pypi.org/project/pylint/#:~:text=Pylint%20is%20a%20static%20code,the%20code%20could%20be%20refactored.
 
-PyPi (2013) _PEP8 - Style Guide for Python Code_ | PyPi. pypi.org. [Available Online] https://peps.python.org/pep-0008/
+Pytest (2023) _Pytest: Helps You Write Better Programs_ | Documentation. pytest. [Available Online] https://docs.pytest.org/en/7.4.x/
+
+Python (2013) _PEP8 - Style Guide for Python Code_ | Pep Index. pep.python.org. [Available Online] https://peps.python.org/pep-0008/
+
+Python (2023) _Unittest - Unit Testing Frameworks_ | Documentation. docs.python.org. [Available Online] https://docs.python.org/3/library/unittest.html
 
 Tang, X. & Zhou, X. (2011) Research and Implementation of RSA Algorithm for Encryption and Decryption. In: _The 6th International Forum on Strategic Technology_. IEEE: 1118 - 1121
-
-Asaad, C., Ismail, E. Naoufal, R. (2020) Fernet Symmetric Encryption Method to Gather MQTT E2E Secure Communications for IoT Devices. 
