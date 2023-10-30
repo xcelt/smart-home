@@ -49,7 +49,7 @@ Forent was chosen as an encryption key (Pronika & Tyagi, 2021) because
 * it is symmetrical and a "lightweight method based on AES-128-CBC" (Asaad et al., 2022: 1)
 * this algorithm is intended for constrained IoT devices not unlike the simulated devices in our code.
 
-These keys were used together in the project, as it is standard practice to have asyncronous and syncronous encryption for comprehensive protection (Tang & Zhoi, 2011).
+These keys were used together in the project, as it is standard practice to have asymmetrical and symmetrical encryption for comprehensive protection (Tang & Zhoi, 2011).
 
 SHA512 was chosen as a control encryption (null hypothesis) key because
 * it is standardized by NIST (Dobraunig et al, 2015)
