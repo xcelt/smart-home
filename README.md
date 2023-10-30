@@ -22,10 +22,10 @@ This will initialise the RSA and Fernet keys for encryption.
 
 ## Run the Program
 On a separate terminal each:
-1. Run `python deviceservice.py` || `python3 deviceservice.py`
+1. Run `python device_service.py` || `python3 device_service.py`
 2. Run `python hub.py` || `python3 hub.py`
 
-Device simulation is set by running `deviceservice.py`. 
+Device simulation is set by running `device_service.py`. 
 
 ![deviceservice.py](./images/deviceservice.png)
 
@@ -39,12 +39,17 @@ Device settings can be manipulated by interacting with the client interface in `
 ## Discussion
 
 ### Program testing
-The code was tested for _____ using pylint (PyPi, 2023), which produced the following results:
+The code was tested using pylint (PyPi, 2023) to evaluate the quality according to the style recommended by PEP 8 (xx, xx), which produced the following results:
 
 ![pylint_init](./images/pylint_initialise.png)
-![pyline deviceservices](./images/pylint_device.png)
+![pylint device](./images/pylint_device.png)
+![pylint deviceservice](./images/pylint_device_service.png)
+![pylint utils](./images/pylint_utils.png)
+![pylint hub](./images/pylint_hub.png)
 
-It should be noted that
+It should be noted that in future iterations, improvements to the code can be made according to the suggestions as shown in the screenshots, resulting in a higher pylint score. Some recommendations are considerations. 
+
+Given the time constraints and the simplified scope of a proof of concept, this demo program is able to simulate storing encrypted file data and establishing a secure connection between client (hub) and server (device_service) to send encrypted messages to each other.
 
 ### Security Testing
 
