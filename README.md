@@ -49,7 +49,7 @@ Forent was chosen as an encryption key (Pronika & Tyagi, 2021) because
 * it is symmetrical and a "lightweight method based on AES-128-CBC" (Asaad et al., 2022: 1)
 * this algorithm is intended for constrained IoT devices not unlike the simulated devices in our code.
 
-These keys were used together in the project, as it is standard practice to have async and sync encryption in IoT (Tang & Zhoi, 2011).
+These keys were used together in the project, as it is standard practice to have asyncronous and syncronous encryption for comprehensive protection (Tang & Zhoi, 2011).
 
 SHA512 was chosen as a control encryption (null hypothesis) key because
 * it is standardized by NIST (Dobraunig et al, 2015)
@@ -69,7 +69,7 @@ We then ran this hash through the popular command line tool _Hashid_ (xxxx, xxxx
 
 ![Hashid512](./images/hashid512.png)
 
-The real-world effort to cracking this hash would be minimal, and those without much hacking skill would be able to figure out how to do so from a hacking tutorial on Youtube (XXXX, XXXX). We thus set this as our H0: all hashes would behave similarly to SHA512.
+The real-world effort to cracking this hash would be minimal, and those without much hacking skill would be able to figure out how to do so from a hacking tutorial on Youtube (XXXX, XXXX). We thus set this as our H0: all hashed keys would behave similarly to SHA512.
 
 We then repeated the process for the RSA and Fernet hashes, which were provided during initialisation. Both the RSA hash and Fernet hashes were found to be unknown in the _hashid_ system: 
 
