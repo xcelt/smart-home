@@ -34,9 +34,9 @@ Device settings can be manipulated by interacting with the client interface in `
 ![hub](./images/hub.png)
 
 ## Assumptions
-For the purpose of this proof of concept demo: 
+For the purpose of this proof of concept (POC) demo: 
 1. The server username and password are hard-coded.
-1. The devices are assumed to use the same set of public and private encryption keys.
+2. The devices are assumed to use the same set of public and private encryption keys.
    
 ## Discussion
 
@@ -51,7 +51,7 @@ The code was tested using pylint (PyPi, 2023) to evaluate the code quality accor
 
 In future iterations, improvements to the code can be made according to the suggestions as shown in the screenshots.  
 
-Given the time constraints and the simplified scope of a proof of concept, this program is meant to simulate storing encrypted file data and establishing a secure connection between client (hub) and server (device_service) for encrypted communication.
+Given the time constraints and the simplified scope of a POC, this program is meant to simulate storing encrypted file data and establishing a secure connection between client (hub) and server (device_service) for encrypted communication.
 
 ### Security Testing
 
