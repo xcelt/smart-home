@@ -53,7 +53,7 @@ In future iterations, improvements to the code can be made according to the sugg
 
 ![pytest_output](./images/device_test_output.png)
 
-Unit tests have been written using _unittest_ (Pytest, 2015) and tested using _pytest_ (Python, 2023). As shown in the screenshot above, all tests pass.
+Unit tests have been written using _unittest_ (Python, 2023) and tested using _pytest_ (Pytest, 2015). As shown in the screenshot above, all tests pass.
 
 Given the time constraints and the simplified scope of a POC, this program is meant to simulate storing encrypted file data and establishing a secure connection between client (hub) and server (device_service) for encrypted communication.
 
