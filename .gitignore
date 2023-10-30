@@ -1,0 +1,14 @@
+.idea/*
+.vscode
+.pytest_cache
+*.pyc
+
+__pycache__
+
+*.key
+*.bin
+VENV
+TEMP
+node_modules
+backend
+frontend
