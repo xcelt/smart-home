@@ -57,7 +57,7 @@ SHA512 was chosen as a control encryption (null hypothesis) key because
 
 ### Hypothesis Testing
 
-Proving the veracity of an encryption algorithm can be difficult outside the realm of mathematics, so our group decided to take a hacker's mindset to testing. We would see how easy each hash was to identify, as once the type of hash encryption is known bruteforcing can be quite simple.
+Proving the veracity of an encryption algorithm can be difficult outside the realm of mathematics, so our group decided to take a hacker's mindset to testing. We would see how easy each hash was to identify, as this can make bruteforcing quite simple.
 
 To set a null hypothesis, we took a piece of code from an unused earlier version of our project and implemented SHA512 to encrypt some passwords and ran the program to generate a hash:
 
@@ -71,7 +71,7 @@ We then ran this hash through the popular command line tool _Hashid_ (xxxx, xxxx
 
 The real-world effort to cracking this hash would be minimal, and those without much hacking skill would be able to figure out how to do so from a hacking tutorial on Youtube (XXXX, XXXX). We thus set this as our H0: all hashes would behave similarly to SHA512.
 
-We then repeated the process for the RSA and Fernet hashes, which were provided during initialisation. Both the RSA hash and Fernet hashes were tested using both full and base configurations, and were found to be unknown in the _hashid_ system: 
+We then repeated the process for the RSA and Fernet hashes, which were provided during initialisation. Both the RSA hash and Fernet hashes were found to be unknown in the _hashid_ system: 
 
 ![RSAFERN](./images/rsafern_init.png)
 
@@ -79,13 +79,9 @@ We then repeated the process for the RSA and Fernet hashes, which were provided 
 
 ![hashidfern](./images/hashidfern.png)
 
-These results indicate the encryption algorithms are not readily available, as _hashid_ is a well known hacking tool and is quite comprehensive in scope (xxxx, xxxx) and thus take more resources and commitment to crack. 
+We then used the website `https://www.dcode.fr/cipher-identifier` to see if the cipher type could be recognised (XXXX, XXXX). 
 
-Even so, we wanted to do some additional tests to see if the RSA and Fernet encryption hashes could be broken through an encryption website. RSA and Fernet may not be included in hash-defeat command-line tools, but they may be vulnerable against dedicated cipher-cracking.
-
-First, we used the website `https://www.dcode.fr/cipher-identifier` to see if the cipher type could be recognised. This website has a comprehensive cipher library, and though it is not a hacking website is easily accessible to hackers looking to verify encryption type.
-
-Results did not result in either RSA or Fernet suggestions:
+Results did not return either RSA or Fernet suggestions:
 
 ![cipherRSA](./images/cipherRSA.png)
 
@@ -112,9 +108,7 @@ Katana Encryption tool, which was proprietary and required knowledge of the key 
 
 ![CyberChef](./images/cyberchef.png)
 
-Solving for the keys with Katana or CyberChef would be possible, but time and resource intensive as the hacker would have to run the decryption cycle on several algorithm types. With this it can be deduced that basic hacking skills and knowledge do not result in easy idenfication of RSA and Fernet encryption keys.
-
-Though it is true that all encryption can be broken, the resources and commitment required to identify and bruteforce the hashed keys can be great deterrents to cyber attackers. SHA512 was idenfied with little effort or knowledge on behalf of the hacker; RSA and Fernet were not so easy to break. We can thus conclude with this limited test that RSA and Fernet encryption keys are more robust than SHA512 encryption, and so we utilised them in our program accordingly.
+Solving for the keys with Katana or CyberChef would be possible, but time and resource intensive as the attacker would have to run the decryption cycle on several algorithm types. With this it can be deduced that basic hacking skills and knowledge do not result in easy idenfication of RSA and Fernet encryption keys. We can thus conclude from this limited test that RSA and Fernet encryption keys are more robust than SHA512 encryption, proving the null hypothesis false.
 
 ## References
 
