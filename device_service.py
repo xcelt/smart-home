@@ -36,7 +36,7 @@ DEVICE_LIST = [
 ]
 
 
-def display_menu():
+def display_devices():
     """
     The server username and password are hard-coded in this simulation to avoid repeated inputs.
     A pre-defined numbered list of simulated devices with the following format, e.g. index: Device:
@@ -359,7 +359,7 @@ def secure_connect_to_server():
 
 
 if __name__ == "__main__":
-    display_menu()
+    display_devices()
 
     # Get the user's chosen device
     devopt = input("Which device should this program instance simulate? ")
