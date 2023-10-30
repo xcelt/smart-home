@@ -42,7 +42,7 @@ Device settings can be manipulated by interacting with the client interface in `
 Testing the ability of RSA and Fernet encryption to withstand hash identification is at the heart of this project. Our team sought to build a comprehensive clienthub and server that could simulate actual smart device use, and then encrypt that program. Our goal was then to demonstrate that RSA and Fernet encryption hashes were harder to crack than SHA512 hashes. 
 
 RSA was chosen as an encryption key (Hamza & Kumar, 2020) because 
-* it is asymmetric and has both public and private keys
+* it is asymmetrical and has both public and private keys
 * the Diffiee-Hellman algorithm "is a key component of the framework" (Tang & Zhou, 2011: )
 
 Forent was chosen as an encryption key (Pronika & Tyagi, 2021) because 
