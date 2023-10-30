@@ -8,9 +8,9 @@ The following program is a prototype for The Smart Home by The A Team (Group 1) 
 
 ### Installing
 1. Install the required dependencies in `requirements.txt`:
-   * `pip install -r requirements.txt` (Windows) || `pip3 install -r requirements.txt`
+   * `pip install -r requirements.txt` (Windows) || `pip3 install -r requirements.txt` (Linux)
    
-3. Run `python initialise.py` (Windows) || `python3 initialise.py` (Linux)
+3. Run `python initialise.py` || `python3 initialise.py`
    * <b>Please note</b>: `initialise.py` should only be run once per computing environment. If it is run more than once, the code will break.
    * To create a separate environment, follow these steps:
      * `python -m venv [name of environment]` || `python3 -m venv [name of environment]`
