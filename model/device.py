@@ -157,12 +157,15 @@ class SmartLight(Device):
         self.switch = "on"
 
     def switch_on(self):
+        """Switch device on"""
         self.switch = "on"
 
     def switch_off(self):
+        """Switch device off"""
         self.switch = "off"
 
     def get_value(self):
+        """Returns the brightness"""
         return self.brightness
 
     def set_value(self, value):
@@ -271,9 +274,11 @@ class MotionSensor(Device):
         self.switch = "on"
 
     def switch_on(self):
+        """Switch device on"""
         self.switch = "on"
 
     def switch_off(self):
+        """Switch device off"""
         self.switch = "off"
 
     def set_value(self, value):
@@ -439,9 +444,11 @@ class Thermostat(Device):
         self.switch = "on"
 
     def switch_on(self):
+        "Switch device on"
         self.switch = "on"
 
     def switch_off(self):
+        "Switch device off"
         self.switch = "off"
 
     def set_value(self, value):

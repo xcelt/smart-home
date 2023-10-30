@@ -45,7 +45,7 @@ RSA was chosen as an encryption key (Hamza & Kumar, 2020) because
 * it is asymmetrical and has both public and private keys
 * the Diffie-Hellman algorithm "is a key component of the framework" (Tang & Zhou, 2011: 1118)
 
-Forent was chosen as an encryption key (Pronika & Tyagi, 2021) because 
+Fernet was chosen as an encryption key (Pronika & Tyagi, 2021) because 
 * it is symmetrical and a "lightweight method based on AES-128-CBC" (Asaad et al., 2022: 1)
 * this algorithm is intended for constrained IoT devices not unlike the simulated devices in our code.
 
