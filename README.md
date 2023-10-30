@@ -34,7 +34,7 @@ Device settings can be manipulated by interacting with the client interface in `
 ![hub](./images/hub.png)
 
 ## Assumptions
-For the purpose of this POC demo: 
+For the purpose of this POC: 
 1. The server username and password are hard-coded.
 2. The devices are assumed to use the same set of public and private encryption keys.
    
