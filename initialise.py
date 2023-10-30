@@ -33,7 +33,7 @@ def generate_and_save_fernet_key(keyfile):
         with open(keyfile, "wb") as encfile:
             encfile.write(key)
         return True
-    except Exception as e:
+    except FileNotFoundError as e:
         logging.error(
             "Error saving fernet key: %s",
             e,
@@ -98,4 +98,4 @@ ENCRYPTED_CREDENTIALS = utils.encrypt_and_save_fernet(
 )
 
 if ENCRYPTED_CREDENTIALS:
-    print("Credentials created and saved to 'Secrets/creds.bin'")
+    print("Credentials created and saved to './Secrets/creds.bin'")
