@@ -34,7 +34,9 @@ Device settings can be manipulated by interacting with the client interface in `
 ![hub](./images/hub.png)
 
 ## Assumptions
-1. For the purpose of this proof of concept demo, the devices are assumed to use the same set of public and private encryption keys
+For the purpose of this proof of concept demo: 
+1. The server username and password are hard-coded.
+1. The devices are assumed to use the same set of public and private encryption keys.
    
 ## Discussion
 
