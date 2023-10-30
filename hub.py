@@ -11,11 +11,6 @@ import utils
 import json
 
 
-def print_out(d):
-    pass
-    # print(d)
-
-
 def handle_device(device_socket, device_address):
     """
     Handles incoming connection requests from devices
@@ -49,7 +44,7 @@ def handle_device(device_socket, device_address):
 
         # If the device id is not registered
         if deviceid not in device_list:
-            print_out(
+            print(
                 f"New {request_data['devtype']} device connected with identifier {deviceid} from {device_address}"
             )
 
@@ -60,15 +55,15 @@ def handle_device(device_socket, device_address):
                 "devtype": request_data["devtype"],
             }
 
-            print_out(f"Device registered")
+            print(f"Device registered")
 
             # Call the save_device_list function to save the device_list dict to disk in encrypted format
             if save_device_list():
                 # If the operation succeeds, inform user
-                print_out("Device list saved to disk")
+                print("Device list saved to disk")
             else:
                 # If not successful, inform user
-                print_out("Unable to save device list to disk")
+                print("Unable to save device list to disk")
 
         else:  # Otherwise (if the device id IS registered)
             # Obtain the registered device's socket and device type and update these in the device_list dict
@@ -76,7 +71,7 @@ def handle_device(device_socket, device_address):
                 "socket": device_socket,
                 "devtype": request_data["devtype"],
             }
-            print_out(
+            print(
                 f"Registered {request_data['devtype']} device {deviceid} connected from {device_address}."
             )
 
@@ -85,7 +80,7 @@ def handle_device(device_socket, device_address):
         utils.send_encrypted_message(device_socket, msg, dev_public_key)
 
     else:  # Otherwise (if the message DID NOT contain the 'action' field OR the credentials sent through by the device are incorrect
-        print_out(
+        print(
             f"Connection request from {device_address} invalid (credentials invalid or didn't make connection request)"
         )
         # Send a (secure encrypted) message to the device through its socket informing it of failure

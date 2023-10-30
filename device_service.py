@@ -18,8 +18,53 @@ import time
 import utils
 from model.device import *
 
+# This is the pre-defined list of sensors. Feel free to add to it, ensuring that
+# the identifiers are unique
+DEVICE_LIST = [
+    SmartLight("Light1", threshold=50),
+    SmartLight("Light2", threshold=30),
+    SmartLight("Light3", threshold=80),
+    MotionSensor("Motion1", threshold=5),
+    MotionSensor("Motion2", threshold=8),
+    MotionSensor("Motion3", threshold=3),
+    SmartLock("Lock1"),
+    SmartLock("Lock2"),
+    SmartLock("Lock3"),
+    Thermostat("Therm1", threshold=23),
+    Thermostat("Therm2", threshold=30),
+    Thermostat("Therm3", threshold=15),
+]
 
-def simulate_data_update():
+
+def display_menu():
+    """
+    The server username and password are hard-coded in this simulation to avoid repeated inputs.
+    A pre-defined numbered list of simulated devices with the following format, e.g. index: Device:
+
+        0: SmartLight| {"identifier": "Light1", "status": "active", "threshold": 50, "switch": "on", "brightness": 90}
+        1: SmartLight| {"identifier": "Light2", "status": "active", "threshold": 30, "switch": "on", "brightness": 90}
+        2: SmartLight| {"identifier": "Light3", "status": "active", "threshold": 80, "switch": "on", "brightness": 90}
+        3: MotionSensor| {"identifier": "Motion1", "status": "active", "threshold": 5, "switch": "on", "motion": 0}
+            .
+            .
+            .
+        10: Thermostat| {"identifier": "Therm2", "status": "active", "threshold": 30, "switch": "on", "temp": 15.0}
+        11: Thermostat| {"identifier": "Therm3", "status": "active", "threshold": 15, "switch": "on", "temp": 15.0}
+
+    Usually the protocol would require exchange of public keys for secure communications.
+    In this demo, we are assuming this has been done and the public keys have been generated and exchanged,
+    with the assumption that all the devices will use the same private/public key.
+    The hub and devices' keys are generated using the './initialise.py' script, loaded from files
+    and used for communications by the device to the hub
+    """
+    print("IoT Device Simulator.")
+    print("Here's the pre-defined list of devices to link to the smart-home:")
+
+    for ind, dev in enumerate(DEVICE_LIST):
+        print(f"{ind}: {dev}")
+
+
+def simulate_data_update(running):
     """
     Simulate data updates to the sensor of the selected device at regular intervals.
     This function runs in a separate thread
@@ -34,92 +79,9 @@ def simulate_data_update():
         time.sleep(5)
 
 
-if __name__ == "__main__":
-    # This is the pre-defined list of sensors. Feel free to add to it, ensuring that
-    # the identifiers are unique
-    DEVICE_LIST = [
-        SmartLight("Light1", threshold=50),
-        SmartLight("Light2", threshold=30),
-        SmartLight("Light3", threshold=80),
-        MotionSensor("Motion1", threshold=5),
-        MotionSensor("Motion2", threshold=8),
-        MotionSensor("Motion3", threshold=3),
-        SmartLock("Lock1"),
-        SmartLock("Lock2"),
-        SmartLock("Lock3"),
-        Thermostat("Therm1", threshold=23),
-        Thermostat("Therm2", threshold=30),
-        Thermostat("Therm3", threshold=15),
-    ]
-
-    print("IoT Device Simulator.")
-    print(
-        "The server username and password are hard-coded in this simulation to avoid making you have to type them over and over."
-    )
-    print(
-        "There is also a pre-defined list of simulated devices that you select from for convenience\n"
-    )
-    print("Here's the pre-defined list of devices to link into the home:")
-
-    # Display numbered list with format: index: Device E.g. will be:
-    #
-    #     0: SmartLight| {"identifier": "Light1", "status": "active", "threshold": 50, "switch": "on", "brightness": 90}
-    #     1: SmartLight| {"identifier": "Light2", "status": "active", "threshold": 30, "switch": "on", "brightness": 90}
-    #     2: SmartLight| {"identifier": "Light3", "status": "active", "threshold": 80, "switch": "on", "brightness": 90}
-    #     3: MotionSensor| {"identifier": "Motion1", "status": "active", "threshold": 5, "switch": "on", "motion": 0}
-    #         .
-    #         .
-    #         .
-    #     10: Thermostat| {"identifier": "Therm2", "status": "active", "threshold": 30, "switch": "on", "temp": 15.0}
-    #     11: Thermostat| {"identifier": "Therm3", "status": "active", "threshold": 15, "switch": "on", "temp": 15.0}
-
-    for ind, dev in enumerate(DEVICE_LIST):
-        print(f"{ind}: {dev}")
-
-    # Get the user's chosen device
-    devopt = input("Which device should this program instance simulate?: ")
-
-    # Attempt to convert the option to an integer, if it fails, bail out. Game over.
-    try:
-        devopt = int(devopt.lower().strip())
-    except ValueError:
-        print("Invalid device option. Please restart the program.")
-        exit(1)
-
-    # If the integer entered doesn't match with the items in the list bail out. Game over.
-    if devopt not in range(len(DEVICE_LIST)):
-        print("Invalid device option. Please restart the program.")
-        exit(1)
-
-    # Get the actual device selected; this is the device for this instance.
-    device = DEVICE_LIST[devopt]
-
-    print(
-        "\nSo usually, one would have to enter the server credentials. For this demo, for convenience and demo purposes this is skipped."
-    )
-    print(
-        "Rather, the credentials have been created and stored in encrypted format on disk using the './Inits/createecryptedservercredentials.py' script"
-    )
-    print("They will be loaded, decrypted and used")
-
+def secure_connect_to_server():
     # Load the Fernet key to decrypt the credentials file
     fer_key = utils.load_fernet_key("./Secrets/dev_enc.key")
-
-    print(
-        "\n Also, usually the protocol would require exchange of public keys for secure communications."
-    )
-    print(
-        "In this demo, we are assuming this has been done and the public keys have been generated and exchanged."
-    )
-    print(
-        "For demo purposes, the hub and devices' keys have been generated using the './initialise.py' script."
-    )
-    print(
-        "They will be loaded from file as relevant and used for communications by the device to the hub"
-    )
-    print(
-        "Finally, for demo purposes, we are assuming that all the devices will use the same private/public key"
-    )
 
     # Load the HUB public key and device private key for encryption purposes
     hub_pub_key = utils.load_public_key("./Secrets/hub_pub.key")
@@ -198,7 +160,7 @@ if __name__ == "__main__":
     running = True
 
     # Start data simulation thread
-    update_thread = threading.Thread(target=simulate_data_update)
+    update_thread = threading.Thread(target=simulate_data_update(running))
     update_thread.daemon = True
     update_thread.start()
 
@@ -394,3 +356,27 @@ if __name__ == "__main__":
 
     print("HUB closed connection. Closing...")
     hub.close()
+
+
+if __name__ == "__main__":
+    display_menu()
+
+    # Get the user's chosen device
+    devopt = input("Which device should this program instance simulate? ")
+
+    # Attempt to convert the option to an integer, if it fails, bail out. Game over.
+    try:
+        devopt = int(devopt.lower().strip())
+    except ValueError:
+        print("Invalid device option. Please restart the program.")
+        exit(1)
+
+    # If the integer entered doesn't match with the items in the list bail out. Game over.
+    if devopt not in range(len(DEVICE_LIST)):
+        print("Invalid device option. Please restart the program.")
+        exit(1)
+
+    # Get the actual device selected; this is the device for this instance.
+    device = DEVICE_LIST[devopt]
+
+    secure_connect_to_server()
